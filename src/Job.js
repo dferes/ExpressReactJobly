@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import './Job.css';
 
 
 const Job = ({ jobs }) => {
@@ -8,9 +9,9 @@ const Job = ({ jobs }) => {
 
   return (
     <div>
-      <h2>{job.title}</h2>
-      <p>Salary: ${job.salary}</p>
-      <p>Equity: {job.equity}</p>
+      <h2 className='a-job-title'>{job.title}</h2>
+      <p className='a-job-salary'>Salary: ${job.salary}</p>
+      <p className='a-job-equity'> Equity: {job.equity}</p>
     </div>  
   );  
 }
