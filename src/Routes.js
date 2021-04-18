@@ -6,20 +6,28 @@ import JobList from './JobList';
 import Profile from './Profile';
 import Signup from './Signup';
 import Login from './Login';
+import Company from './Company';
+import Job from './Job';
 
 // will need a lot more routes; this will suffice for now
 
-const Routes = () => {
+const Routes = ({ companies, jobs }) => {
   return (
     <Switch>
       <Route exact path='/'>
         <Home />
       </Route>
       <Route exact path='/companies'>
-        <CompanyList />
+        <CompanyList companies={companies}/>
+      </Route>
+      <Route exact path='/companies/:handle'>
+        <Company companies={companies} />
       </Route>
       <Route exact path='/jobs'>
-        <JobList />
+        <JobList jobs={jobs} />
+      </Route>
+      <Route exact path='/jobs/:id'>
+        <Job jobs={jobs} />
       </Route>
       <Route exact path='/profile'>
         <Profile />
