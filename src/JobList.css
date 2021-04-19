@@ -1,0 +1,20 @@
+.job-form-div {
+    margin-top: -2em;
+    width: 62.5vw;
+  }
+  
+  .job-title-search-input {
+    width: calc(62.5vw - 4.5em);
+    margin-right: 0.5em; 
+    margin-bottom: 2em;
+    padding: 0.45em;
+    font-size: 1.15em;
+  
+  }
+  
+  .job-title-search-button {
+    padding: 0.43em;
+    font-size: 1.1em;
+    margin-bottom: 0.2em;  
+  }
+  
