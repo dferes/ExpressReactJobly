@@ -8,6 +8,8 @@ import JoblyApi from './api';
 function App() {
   const [ companies, setCompanies ] = useState([]);
   const [ jobs, setJobs ] = useState([]);
+
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   
   useEffect( () => {
     const getCompanies = async () => {
@@ -27,9 +29,12 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar />
+        <NavBar isLoggedIn={isLoggedIn} />
         <main>
-          <Routes companies={companies} jobs={jobs} />
+          <Routes 
+            companies={companies} 
+            jobs={jobs} 
+            isLoggedIn={isLoggedIn} />
         </main>
       </BrowserRouter>
     </div>
