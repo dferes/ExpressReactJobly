@@ -19,7 +19,6 @@ const CompanyDetails = () => {
     getCompanyJobs();
   }, []);
   
-
   return (
     <div className='company-jobs-div'>
       { readyToRender && 
@@ -33,7 +32,7 @@ const CompanyDetails = () => {
           key={job.id}
           id={job.id}
           title={job.title}
-          companyHandle={job.companyHandle}
+          companyHandle={company.handle}
           salary={job.salary}
           equity={job.equity}
         />  
