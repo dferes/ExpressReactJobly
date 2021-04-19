@@ -49,9 +49,7 @@ const CompanyList = ({ companies }) => {
           logoUrl={comp.logoUrl}
         /> 
       ))}  
-      { isEmpty && <p className='no-results-msg'>Sorry, no results were found!</p>
-
-      }
+      { isEmpty && <p className='no-results-msg'>Sorry, no results were found!</p> }
     </div>  
   );
 };
