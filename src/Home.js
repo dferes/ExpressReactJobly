@@ -2,8 +2,8 @@ import React from 'react';
 import './Home.css';
 import { Button } from 'reactstrap';
 
-const Home = ({ isLoggedIn=false }) => {
-// TODO:  will need to include logged in user's name in the welcome back message
+const Home = ({ isLoggedIn }) => {
+
   return (
     <section>
       <div className='jobly-welcome-div'>
@@ -16,7 +16,7 @@ const Home = ({ isLoggedIn=false }) => {
           <Button color='primary' className='signup-button'>Signup</Button>
         } 
         {
-          isLoggedIn && <h2>Welcome Back, {}!</h2>  
+          isLoggedIn && <h2 className='jobly-hello-message'>Welcome Back, {}!</h2>  
         }  
       </div>  
     </section>

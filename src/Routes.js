@@ -9,13 +9,12 @@ import Login from './Login';
 import CompanyDetails from './CompanyDetails';
 import Job from './Job';
 
-// will need a lot more routes; this will suffice for now
 
-const Routes = ({ companies, jobs }) => {
+const Routes = ({ companies, jobs, isLoggedIn }) => {
   return (
     <Switch>
       <Route exact path='/'>
-        <Home />
+        <Home isLoggedIn={isLoggedIn} />
       </Route>
       <Route exact path='/companies'>
         <CompanyList companies={companies}/>

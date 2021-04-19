@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from 'reactstrap';
 import './NavBar.css';
 
-const NavBar = ({ isLoggedIn=false }) => {
+const NavBar = ({ isLoggedIn }) => {
   return (
     <div>
       <Navbar expand='md'>
