@@ -50,4 +50,12 @@
   margin-top: -1.4em;
   margin-right: 1.15em;
   float: right;
+  background-color: rgba(78, 42, 207, 0.625);
+  border-radius: 0.625em;
+}
+
+.job-apply-button:hover {
+  border: 2px solid black;
+  background-color: rgba(90, 57, 206, 0.625);
+  color: black;
 }
