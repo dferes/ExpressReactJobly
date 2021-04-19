@@ -9,7 +9,7 @@ const CompanyDetails = () => {
   const [ readyToRender, setReadyToRender ] = useState(false);
   const { handle } = useParams();
   
-  useEffect( async () => {
+  useEffect( () => {
     const getCompanyJobs = async () => {
       const company = await JoblyApi.getCompany(handle);
       setCompany(company);
@@ -17,7 +17,7 @@ const CompanyDetails = () => {
     };
     
     getCompanyJobs();
-  }, []);
+  }, [handle]); // double check this
   
   return (
     <div className='company-jobs-div'>
