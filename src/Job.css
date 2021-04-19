@@ -2,20 +2,20 @@
 .job-div {
   background-color: rgba(251, 245, 245, 0.75);  
   width: 62.5vw;  
-  box-shadow: 0px 1px 1px rgb(70, 70, 70);
+  box-shadow: 1px 0px 1px 1px #423c3c;
   margin-bottom: 1.75em;
   padding-bottom: 3em;
 }
     
 .job-div:hover {
-  box-shadow: 1px 5px 10px 1px rgb(70, 70, 70);
+  box-shadow: 1px 5px 10px 5px rgb(70, 70, 70);
 }
     
 .job-title {
   padding-top: 1.35em;
   padding-left: 1.3em;
   padding-right: 1.3em;
-  margin-bottom: -0.5em;
+  margin-bottom: 0.6em;
   font-size: 1em;
   color: black;  
 }
