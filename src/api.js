@@ -57,7 +57,7 @@ class JoblyApi {
   /** Get details on either all jobs or jobs 
   *  that have a similar title to data.title **/
   static async getAllJobs(data={}) {
-    let res = await this.request('jobs/');
+    let res = await this.request('jobs/', data);
     return res.jobs;
   }
 
