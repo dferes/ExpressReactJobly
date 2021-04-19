@@ -11,7 +11,7 @@ const Job = ({ id, title, companyHandle, salary, equity }) => {
       {/* <img className='company-image' src={comp.logoUrl} alt=''/> */}
       <p className='job-salary'>Salary: ${salary}</p>
       <p className='job-equity'>Equity: {equity? equity: 0}</p>
-      <Button className='job-apply-button' color='danger'>Apply</Button>
+      <Button className='job-apply-button' >Apply</Button>
   </div>  
   );  
 }
