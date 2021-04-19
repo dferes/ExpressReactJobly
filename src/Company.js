@@ -1,15 +1,17 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import './Company.css';
 
 
-const Company = ({ companies }) => {
-  const { handle } = useParams();
-  const company = companies.find( com => handle === com.handle);
-
+const Company = ({ handle, name, description, logoUrl }) => {
   return (
-    <div className='company-div'>
-    <h2>{ company.name }</h2>
-    </div>  
+    <Link className='company-link' to={`/companies/${handle}`}>
+      <div className='company-div'> 
+        <p className='company-name'>{name}</p>
+        {/* <img className='company-image' src={comp.logoUrl} alt=''/> */}
+        <p className='company-description'>{description}</p> 
+      </div>  
+    </Link>  
   );  
 };
 
