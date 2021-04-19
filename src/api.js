@@ -67,7 +67,8 @@ class JoblyApi {
     return res.user;
   }
  
-  static async logIn(username, password, method) {
+  static async logIn(username, password) {
+    console.log(password, username);
     const data = {
       username: username,
       password: password
@@ -75,7 +76,7 @@ class JoblyApi {
     let res = await this.request(
       '/auth/token', 
       data,
-      method
+      'post'
     );
 
     return res.token;
