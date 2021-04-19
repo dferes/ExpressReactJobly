@@ -10,13 +10,13 @@ const Login = () => {
   const handleLoginChange = evt => {
     const { name, value } = evt.target;
     setFormData( data => ({...data, [name]: value}));
-    console.log('formData: ', formData);
   };
 
   const handleLoginSubmit = async evt => {
     evt.preventDefault();
-    await JoblyApi.logIn
-    
+    let res = await JoblyApi.logIn(formData.username, formData.password,);
+    console.log('Login Response: ----->', res);
+    // probaly redirect from here if response isn't an error...either hompage or profile
   };
 
   return (
@@ -25,7 +25,8 @@ const Login = () => {
       <Form className='login-form' onSubmit={handleLoginSubmit}>
         <FormGroup>
           <Label for='username'>Username</Label>
-            <Input 
+            <Input
+              autoFocus 
               type='text'
               name='username'
               id='username'
@@ -35,7 +36,7 @@ const Login = () => {
         </FormGroup>
 
         <FormGroup>
-          <Label for='password'>Username</Label>
+          <Label for='password'>Password</Label>
             <Input 
               type='password'
               name='password'
@@ -44,7 +45,7 @@ const Login = () => {
               onChange={handleLoginChange}  
             />
         </FormGroup>
-        <Button className='login-button'>Log In</Button>
+        <Button color='primary' className='login-button'>Log In</Button>
       </Form>
     </div>  
   );  
