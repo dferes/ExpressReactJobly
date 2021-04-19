@@ -6,7 +6,7 @@ import JobList from './JobList';
 import Profile from './Profile';
 import Signup from './Signup';
 import Login from './Login';
-import Company from './Company';
+import CompanyDetails from './CompanyDetails';
 import Job from './Job';
 
 // will need a lot more routes; this will suffice for now
@@ -21,7 +21,7 @@ const Routes = ({ companies, jobs }) => {
         <CompanyList companies={companies}/>
       </Route>
       <Route exact path='/companies/:handle'>
-        <Company companies={companies} />
+        <CompanyDetails />
       </Route>
       <Route exact path='/jobs'>
         <JobList jobs={jobs} />
