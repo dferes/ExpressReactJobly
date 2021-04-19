@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CompanyList.css';
-import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
+import Company from './Company';
 import JoblyApi from './api';
 
 
@@ -26,27 +26,28 @@ const CompanyList = ({ companies }) => {
   
   return (  
     <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='company-name-search' />
-        <input 
-          className='company-name-search-input'
-          id='company-name-search'
-          name='name'
-          placeholder='Enter a serch term...'
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <Button className='company-name-search-button' color='primary'>Submit</Button>    
-      </form>
-
+      <div className='form-div'>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor='company-name-search' />
+          <input 
+            className='company-name-search-input'
+            id='company-name-search'
+            name='name'
+            placeholder='Enter a serch term...'
+            value={formData.name}
+            onChange={handleChange}
+          />
+          <Button className='company-name-search-button' color='primary'>Submit</Button>    
+        </form>
+      </div>  
       { !isEmpty && companyList.map( comp => (
-        <Link className='company-link' to={`/companies/${comp.handle}`} key={comp.handle}>
-          <div className='company-div'> 
-            <p className='company-name'>{comp.name}</p>
-            {/* <img className='company-image' src={comp.logoUrl} alt=''/> */}
-            <p className='company-description'>{comp.description}</p> 
-          </div>  
-        </Link>  
+        <Company 
+          key={comp.handle}
+          handle={comp.handle}
+          name={comp.handle}
+          description={comp.description}  
+          logoUrl={comp.logoUrl}
+        /> 
       ))}  
       { isEmpty && <p className='no-results-msg'>Sorry, no results were found!</p>
 
