@@ -19,7 +19,7 @@ class JoblyApi {
 
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${JoblyApi.token}` };
-    const params = (method === "get")
+    const params = (method === "get") // is this right??
         ? data
         : {};
 
@@ -67,6 +67,19 @@ class JoblyApi {
     return res.user;
   }
  
+  static async logIn(username, password, method) {
+    const data = {
+      username: username,
+      password: password
+    };
+    let res = await this.request(
+      '/auth/token', 
+      data,
+      method
+    );
+
+    return res.token;
+  }
  
  
   // obviously, you'll add a lot here ...
