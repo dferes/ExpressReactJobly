@@ -6,6 +6,7 @@
   width: 62.5vw;
   background-color: rgba(251, 245, 245, 0.75);  
   box-shadow: 1px 0px 1px 1px #423c3c;
+  border-radius: 0.75em;
 }
   
 .company-div:hover {
