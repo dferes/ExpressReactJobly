@@ -1,28 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './CompanyList.css';
 import { Button } from 'reactstrap';
 import Company from './Company';
-import JoblyApi from './api';
-
+import useInputFilter from './hooks/useInputFilter';
 
 const CompanyList = ({ companies }) => {
-  const [ formData, setFormData ] = useState({ name: ''});
-  const [ companyList, setCompanyList ] = useState(companies);
-  const [ isEmpty, setIsEmpty ] = useState(false);
-  
-  const handleChange = evt => {
-    const { name, value } = evt.target;  
-    setFormData( data => ({...data, [name]: value}));
-  };
-
-  const handleSubmit = async evt => {
-    evt.preventDefault();  
-    const res = formData.name !== '' ?
-      await JoblyApi.getAllCompanies(formData)
-      : companies;
-    setIsEmpty( res.length === 0 ? true: false); 
-    setCompanyList(res);
-  };
+  const [ 
+    resultList, 
+    filter, 
+    handleChange, 
+    handleSubmit, 
+    isEmpty 
+  ] = useInputFilter({ defaultList: companies, apiMethod: 'getAllCompanies', termKey: 'name'} );
   
   return (  
     <div>
@@ -34,13 +23,13 @@ const CompanyList = ({ companies }) => {
             id='company-name-search'
             name='name'
             placeholder='Enter a serch term...'
-            value={formData.name}
+            value={filter.name}
             onChange={handleChange}
           />
           <Button className='company-name-search-button' color='primary'>Submit</Button>    
         </form>
       </div>  
-      { !isEmpty && companyList.map( comp => (
+      { !isEmpty && resultList.map( comp => (
         <Company 
           key={comp.handle}
           handle={comp.handle}

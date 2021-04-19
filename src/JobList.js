@@ -1,48 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Job from './Job';
-import JoblyApi from './api';
+import useInputFilter from './hooks/useInputFilter';
 import { Button } from 'reactstrap';
 import './JobList.css';
 
 
 const JobList = ({ jobs }) => {
 
-  const [ formData2, setFormData2 ] = useState({ title: ''});
-  const [ jobList, setJobList ] = useState(jobs);
-  const [ isEmpty, setIsEmpty ] = useState(false);
-  
-  const handleChange2 = evt => {
-    const { name, value } = evt.target;  
-    setFormData2( data => ({...data, [name]: value}));
-  };
-  
-  const handleSubmit2 = async evt => {
-    evt.preventDefault();  
-    const res = formData2.title !== '' ?
-      await JoblyApi.getAllJobs(formData2)
-      : jobs;
-    setIsEmpty( res.length === 0 ? true: false); 
-    setJobList(res);
-    console.log('----->>><<< The RESULT IS: ', res);
-  };
+  const [ 
+    resultList, 
+    filter, 
+    handleChange, 
+    handleSubmit, 
+    isEmpty 
+  ] = useInputFilter({ defaultList: jobs, apiMethod: 'getAllJobs', termKey: 'title'} );
 
   return (
     <div>
       <div className='job-form-div'>
-        <form onSubmit={handleSubmit2}>
+        <form onSubmit={handleSubmit}>
           <label htmlFor='job-title-search' />
           <input 
             className='job-title-search-input'
             id='job-title-search'
             name='title'
             placeholder='Enter a serch term...'
-            value={formData2.title}
-            onChange={handleChange2}
+            value={filter.title}
+            onChange={handleChange}
           />
           <Button className='job-title-search-button' color='primary'>Submit</Button>    
         </form>
       </div>    
-      { !isEmpty && jobList.map( job => (
+      { !isEmpty && resultList.map( job => (
         <Job 
           key={job.id}
           id={job.id}
