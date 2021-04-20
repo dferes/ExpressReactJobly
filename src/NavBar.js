@@ -8,6 +8,11 @@ const NavBar = ({ userToken, setIsLoggedIn, user }) => {
     <div>
       <Navbar expand='md'>
         <NavLink exact to='/' className='navbar-brand'>Jobly</NavLink>
+        {  userToken &&
+        <Nav className='mr-auto'>
+          <NavItem className='logged-in-username'>( {user.username} )</NavItem>
+        </Nav> 
+        }
         <Nav className='ml-auto' navbar>
           {  userToken &&
             <NavItem>
@@ -36,7 +41,7 @@ const NavBar = ({ userToken, setIsLoggedIn, user }) => {
           }
           { userToken &&
             <NavItem>
-              <NavLink onClick={ () => setIsLoggedIn(false)} to='/logout'>Log Out, {user.username}</NavLink>  
+              <NavLink onClick={ () => setIsLoggedIn(false)} to='/logout'>Log Out</NavLink>  
             </NavItem>
           }
         </Nav>
