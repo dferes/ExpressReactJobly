@@ -1,10 +1,18 @@
 .login-form {
-  /* border: 1px solid rgba(58, 58, 58, 0.3); */
   padding: 2.5em;
   margin-top: 1.5em;
   background-color: white;
   padding-bottom: 3.5em;
   box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.login-form input {
+  background-color: rgba(38, 38, 38, 0.125);  
+}
+
+.login-form input:hover {
+ background-color: rgba(38, 38, 38, 0.125);
+ border: 2px solid rgba(0, 0, 0, 0.5);  
 }
 
 .login-message,
