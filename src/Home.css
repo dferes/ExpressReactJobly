@@ -15,18 +15,17 @@
   margin-bottom: 1.5em;
 }
 
-.signup-button {
+.homepage-signup-button {
   margin-left: 1em;
   padding: 0.2em 0.5em;
   font-size: 1.1em;  
 }
 
-.login-button {
+.homepage-login-button {
   padding: 0.2em 0.5em;
   font-size: 1.1em;  
 }
 
 .jobly-hello-message {
-  color: black;
-    
+  color: black; 
 }
