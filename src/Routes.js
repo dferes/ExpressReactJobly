@@ -10,7 +10,20 @@ import CompanyDetails from './CompanyDetails';
 import Job from './Job';
 
 
-const Routes = ({ companies, jobs, handleLoginChange, handleLoginSubmit, userToken, user, formData, validCredentials }) => {
+const Routes = ({ 
+  companies, 
+  jobs, 
+  handleLoginChange, 
+  handleLoginSubmit, 
+  userToken, 
+  user, 
+  formData, 
+  validCredentials,
+  signupFormData,
+  handleSignupChange,
+  handleSignupSubmit,
+  errorMessage
+}) => {
   return (
     <Switch>
       <Route exact path='/'>
@@ -32,7 +45,12 @@ const Routes = ({ companies, jobs, handleLoginChange, handleLoginSubmit, userTok
         <Profile />
       </Route>
       <Route exact path='/signup'>
-        <Signup />
+        <Signup 
+          signupFormData={signupFormData}
+          handleSignupChange={handleSignupChange}
+          handleSignupSubmit={handleSignupSubmit}
+          errorMessage={errorMessage}
+        />
       </Route>
       <Route exact path='/login'>
         <Login 
@@ -40,6 +58,7 @@ const Routes = ({ companies, jobs, handleLoginChange, handleLoginSubmit, userTok
           handleLoginSubmit={handleLoginSubmit}
           formData={formData}
           validCredentials={validCredentials}
+          userToken={userToken}
         />
       </Route>
       <Redirect to='/' />
