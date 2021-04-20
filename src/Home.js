@@ -1,9 +1,9 @@
 import React from 'react';
 import './Home.css';
 import { Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 const Home = ({ userToken, user }) => {
-
   return (
     <section>
       <div className='jobly-welcome-div'>
@@ -11,8 +11,12 @@ const Home = ({ userToken, user }) => {
         <h3 className='jobly-welcome-message'>All the jobs in one, convenient place.</h3>
         { !userToken &&
           <div>
-            <Button color='primary' className='homepage-login-button'>Login</Button>
-            <Button color='primary' className='homepage-signup-button'>Signup</Button>
+            <Link exact to='/login'>
+              <Button color='primary' className='homepage-login-button'>Login</Button>
+            </Link>
+            <Link exact to='/signup'>
+              <Button color='primary' className='homepage-signup-button'>Signup</Button>
+            </Link>
           </div>
         }    
         {
