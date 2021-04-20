@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from 'react';
 import './App.css';
-import { BrowserRouter, useHistory } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import NavBar from './NavBar';
 import Routes from './Routes';
 import JoblyApi from './api';
@@ -14,7 +14,8 @@ function App() {
   // Combine state for userToken and user by putting the token in the user info
   const [ formData, setFormData ] = useState({ username: '', password: ''});
   const [ validCredentials, setValidCredentials ] = useState(true);
-  const history = useHistory();
+  const [ signupFormData, setSignupFormData ] = useState({username: '', password: '', firstName:'', lastName: '', email: ''});
+  const [ errorMessage, setErrorMessage ] = useState('');
 
   useEffect( () => {
     const getCompanies = async () => {
@@ -54,6 +55,9 @@ function App() {
     });
   }
 
+  //  Refactor the 4 functions below into 2, pass the type of form data aswell as
+  //  the api methhod as a string
+
   const handleLoginChange = evt => {
     const { name, value } = evt.target;
     setFormData( data => ({...data, [name]: value}));
@@ -62,18 +66,45 @@ function App() {
   const handleLoginSubmit = async evt => {
     evt.preventDefault();
     try {
-      let token = await JoblyApi.logIn(formData.username, formData.password);
+      let token = await JoblyApi.logIn(formData);
       setUserToken(token);
       setValidCredentials(true);
+      
       const user = await JoblyApi.getUser(formData.username);
       setUserInfo(user);
       setIsLoggedIn(true);
-      // history.push('/'); Need to fix this later...
     }catch(err) {
-      // console.log('ERR: ', err);
       setValidCredentials(false);
     }
   };
+
+
+  
+  const handleSignupChange = evt => {
+    const { name, value } = evt.target;
+    setSignupFormData( data => ({...data, [name]: value}));
+  };
+
+  const handleSignupSubmit = async evt => {
+    evt.preventDefault();
+    try {
+      const token = await JoblyApi.signup(signupFormData);
+      setUserToken(token);
+      setValidCredentials(true);
+
+      const user = await JoblyApi.getUser(formData.username);
+      setUserInfo(user);
+      setIsLoggedIn(true);
+      setErrorMessage('');
+    }catch(err) {
+      if ( String(err).substring(0,18) == 'Duplicate username'){
+        setErrorMessage(`Username '${signupFormData.username}' already exists`);
+      }
+       // Need to pass error message for invalid email type too
+    }
+  };
+
+
 
   return (
     <div className="App">
@@ -93,6 +124,10 @@ function App() {
             user={user}
             formData={formData}
             validCredentials={validCredentials}
+            signupFormData={signupFormData}
+            handleSignupChange={handleSignupChange}
+            handleSignupSubmit={handleSignupSubmit}
+            errorMessage={errorMessage}
           />
         </main>
       </BrowserRouter>
