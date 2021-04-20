@@ -6,15 +6,16 @@ import Routes from './Routes';
 import JoblyApi from './api';
 
 function App() {
+  const emptyUserData = {username: '', firstName: '', lastName: '', email: '', isAdmin: '', applications: []};
   const [ companies, setCompanies ] = useState([]);
   const [ jobs, setJobs ] = useState([]);
   const [ userToken, setUserToken ] = useState('');
-  const [ user, setUser ] = useState({username: '', firstName: '', lastName: '', email: '', isAdmin: '', applications: []});
+  const [ user, setUser ] = useState( emptyUserData );
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   // Combine state for userToken and user by putting the token in the user info
   const [ formData, setFormData ] = useState({ username: '', password: ''});
   const [ validCredentials, setValidCredentials ] = useState(true);
-  const [ signupFormData, setSignupFormData ] = useState({username: '', password: '', firstName:'', lastName: '', email: ''});
+  const [ signupFormData, setSignupFormData ] = useState( emptyUserData );
   const [ errorMessage, setErrorMessage ] = useState('');
 
   useEffect( () => {
@@ -68,10 +69,13 @@ function App() {
     try {
       let token = await JoblyApi.logIn(formData);
       setUserToken(token);
+      // console.log('----------->TOKENS MATCH ? : ', JoblyApi.token === token );
       setValidCredentials(true);
       
       const user = await JoblyApi.getUser(formData.username);
       setUserInfo(user);
+      setFormData({ username: '', password: ''});
+      setErrorMessage('');
       setIsLoggedIn(true);
     }catch(err) {
       setValidCredentials(false);
@@ -92,19 +96,15 @@ function App() {
       setUserToken(token);
       setValidCredentials(true);
 
-      const user = await JoblyApi.getUser(formData.username);
-      setUserInfo(user);
-      setIsLoggedIn(true);
+      const user_ = await JoblyApi.getUser(signupFormData.username);
+      setUserInfo(user_);
+      setSignupFormData( {username: '', password: '', firstName:'', lastName: '', email: ''});
       setErrorMessage('');
+      setIsLoggedIn(true);
     }catch(err) {
-      if ( String(err).substring(0,18) == 'Duplicate username'){
-        setErrorMessage(`Username '${signupFormData.username}' already exists`);
-      }
-       // Need to pass error message for invalid email type too
+      setErrorMessage(err);  
     }
   };
-
-
 
   return (
     <div className="App">
