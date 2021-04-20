@@ -50,6 +50,7 @@ const Routes = ({
           handleSignupChange={handleSignupChange}
           handleSignupSubmit={handleSignupSubmit}
           errorMessage={errorMessage}
+          userToken={userToken}
         />
       </Route>
       <Route exact path='/login'>
