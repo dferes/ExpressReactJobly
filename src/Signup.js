@@ -3,20 +3,20 @@ import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import './Signup.css';
 
 
-const Signup = () => {
+const Signup = ({ signupFormData, handleSignupChange, handleSignupSubmit, errorMessage }) => {
   return (
     <div className='signup-form-div'>
       <h2 className='signup-message'>Sign Up</h2>
-      <Form className='signup-form'>
+      <Form onSubmit={handleSignupSubmit} className='signup-form'>
         <FormGroup>
           <Label for='username'>Username</Label>
             <Input 
-              autoFocus 
+              autoFocus
               type='text'
               name='username'
               id='username'
-              // value={formData.username}
-              // onChange={handleLoginChange}  
+              value={signupFormData.username}
+              onChange={handleSignupChange}  
             />
         </FormGroup>
         <FormGroup>
@@ -25,8 +25,8 @@ const Signup = () => {
               type='password'
               name='password'
               id='password'
-              // value={formData.username}
-              // onChange={handleLoginChange}  
+              value={signupFormData.password}
+              onChange={handleSignupChange}  
           />
         </FormGroup>
         <FormGroup>
@@ -35,8 +35,8 @@ const Signup = () => {
               type='text'
               name='firstName'
               id='firstName'
-              // value={formData.username}
-              // onChange={handleLoginChange}  
+              value={signupFormData.firstName}
+              onChange={handleSignupChange}
           />
         </FormGroup>
         <FormGroup>
@@ -45,8 +45,8 @@ const Signup = () => {
               type='text'
               name='lastName'
               id='lastName'
-              // value={formData.username}
-              // onChange={handleLoginChange}  
+              value={signupFormData.lastName}
+              onChange={handleSignupChange}  
           />
         </FormGroup>
         <FormGroup>
@@ -55,10 +55,15 @@ const Signup = () => {
               type='email'
               name='email'
               id='email'
-              // value={formData.username}
-              // onChange={handleLoginChange}  
+              value={signupFormData.email}
+              onChange={handleSignupChange}
             />
         </FormGroup>
+        { errorMessage && 
+          <div className='bad-login-div'>
+            <p className='bad-login-message'>{errorMessage}</p>
+          </div>      
+        }
         <Button color='primary' className='signup-form-button'>Sign Up</Button>
       </Form>
     </div>  
