@@ -1,9 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import './Signup.css';
 
 
-const Signup = ({ signupFormData, handleSignupChange, handleSignupSubmit, errorMessage }) => {
+const Signup = ({ signupFormData, handleSignupChange, handleSignupSubmit, errorMessage, userToken }) => {
+  const history = useHistory();
+  if ( !errorMessage && userToken ) history.push('/');
+
   return (
     <div className='signup-form-div'>
       <h2 className='signup-message'>Sign Up</h2>
@@ -60,8 +64,8 @@ const Signup = ({ signupFormData, handleSignupChange, handleSignupSubmit, errorM
             />
         </FormGroup>
         { errorMessage && 
-          <div className='bad-login-div'>
-            <p className='bad-login-message'>{errorMessage}</p>
+          <div className='bad-signup-div'>
+            <p className='bad-signup-message'>{errorMessage}</p>
           </div>      
         }
         <Button color='primary' className='signup-form-button'>Sign Up</Button>
