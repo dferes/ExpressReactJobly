@@ -10,11 +10,11 @@ import CompanyDetails from './CompanyDetails';
 import Job from './Job';
 
 
-const Routes = ({ companies, jobs, isLoggedIn }) => {
+const Routes = ({ companies, jobs, userToken, setUserToken, setIsLoggedIn, setUser, user }) => {
   return (
     <Switch>
       <Route exact path='/'>
-        <Home isLoggedIn={isLoggedIn} />
+        <Home userToken={userToken} user={user} />
       </Route>
       <Route exact path='/companies'>
         <CompanyList companies={companies}/>
@@ -35,9 +35,12 @@ const Routes = ({ companies, jobs, isLoggedIn }) => {
         <Signup />
       </Route>
       <Route exact path='/login'>
-        <Login />
+        <Login 
+          setUserToken={setUserToken}
+          setIsLoggedIn={setIsLoggedIn}
+          setUser={setUser}
+        />
       </Route>
-      {/* should probably use useState for logging out, probaly don't need a component for that one... */}
       <Redirect to='/' />
     </Switch>
   );
