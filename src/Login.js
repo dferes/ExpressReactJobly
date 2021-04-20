@@ -1,48 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Button, FormGroup, Label, Input } from 'reactstrap';
-import { useHistory } from 'react-router-dom';
-import JoblyApi from './api';
 import './Login.css';
 
 
-const Login = ({ setUserToken, setIsLoggedIn, setUser  }) => {
-  const [ formData, setFormData ] = useState({ username: '', password: ''});
-  const [ validCredentials, setValidCredentials ] = useState(true);
-  const history = useHistory();
-
-  const setUserInfo = user => {
-    setUser({
-      username:     user.username,
-      firstName:    user.firstName,
-      lastName:     user.lastName,
-      email:        user.email,
-      isAdmin:      user.isAdmin,
-      applications: user.applications
-    });
-  }
-
-  const handleLoginChange = evt => {
-    const { name, value } = evt.target;
-    setFormData( data => ({...data, [name]: value}));
-  };
-
-  const handleLoginSubmit = async evt => {
-    evt.preventDefault();
-    try {
-      let token = await JoblyApi.logIn(formData.username, formData.password);
-      setUserToken(token);
-      setValidCredentials(true);
-     
-      const user = await JoblyApi.getUser(formData.username);
-      setUserInfo(user);
-      setIsLoggedIn(true);
-      history.push('/');
-    }catch(err) {
-      setValidCredentials(false);
-    }
-
-  };
-
+const Login = ({ handleLoginSubmit, handleLoginChange, formData, validCredentials  }) => {
   return (
     <div className='login-form-div'>
       <h2 className='login-message' >Log In</h2>  
