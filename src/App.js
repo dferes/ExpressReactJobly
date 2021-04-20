@@ -8,9 +8,11 @@ import JoblyApi from './api';
 function App() {
   const [ companies, setCompanies ] = useState([]);
   const [ jobs, setJobs ] = useState([]);
-
+  const [ userToken, setUserToken ] = useState('');
+  const [ user, setUser ] = useState({username: '', firstName: '', lastName: '', email: '', isAdmin: '', applications: []});
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
-  
+  // Combine state for userToken and user by putting the token in the user info
+
   useEffect( () => {
     const getCompanies = async () => {
       const allCompanies = await JoblyApi.getAllCompanies();
@@ -26,15 +28,35 @@ function App() {
     getJobs();
   }, []);
 
+
+  useEffect( () => {
+    const logout = () => {
+      setUserToken('');
+      setUser({username:'', firstName:'', lastName:'', email:'', isAdmin:'', applications:[]});
+    };
+    
+    if (!isLoggedIn) logout();
+  }, [isLoggedIn]);
+
+
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar isLoggedIn={isLoggedIn} />
+        <NavBar 
+          userToken={userToken} 
+          setIsLoggedIn={setIsLoggedIn}
+          user={user} 
+        />
         <main>
           <Routes 
             companies={companies} 
             jobs={jobs} 
-            isLoggedIn={isLoggedIn} />
+            userToken={userToken}
+            setUserToken={setUserToken}
+            setIsLoggedIn={setIsLoggedIn}
+            setUser={setUser}
+            user={user}
+          />
         </main>
       </BrowserRouter>
     </div>
