@@ -1,9 +1,13 @@
 import React from 'react';
 import { Form, Button, FormGroup, Label, Input } from 'reactstrap';
+import { useHistory } from 'react-router-dom';
 import './Login.css';
 
 
-const Login = ({ handleLoginSubmit, handleLoginChange, formData, validCredentials  }) => {
+const Login = ({ handleLoginSubmit, handleLoginChange, formData, validCredentials, userToken  }) => {
+  const history = useHistory();
+  if(validCredentials && userToken)  history.push('/');
+
   return (
     <div className='login-form-div'>
       <h2 className='login-message' >Log In</h2>  
