@@ -38,4 +38,7 @@ nav a.active.navbar-brand {
 nav a:not(.navbar-brand):hover {
   font-weight: bold;
 }
-  
+
+.logged-in-username {
+  color: white;
+}
