@@ -34,7 +34,7 @@
 
 .bad-login-div {
   background-color: rgba(226, 31, 31, 0.3);
-  height: 2.5em;
+  min-height: 2.5em;
   border-radius: 0.7em;
   margin-bottom: 0.5em;
 }
