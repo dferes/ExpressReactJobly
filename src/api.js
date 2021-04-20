@@ -34,13 +34,34 @@ class JoblyApi {
 
   // Individual API routes
 
-  static async logIn(username, password) {
+  static async logIn(formData) {
+    const { username, password } = formData;
     const data = {
       username: username,
       password: password
     };
+    
     let res = await this.request(
       'auth/token', 
+      data,
+      'post'
+    );
+
+    return res.token;
+  }
+
+  static async signup(formData){
+    const { username, password, firstName, lastName, email } = formData;
+    const data = {
+      username: username,
+      password: password,
+      firstName: firstName,
+      lastName: lastName, 
+      email: email
+    };
+
+    let res = await this.request(
+      'auth/register',
       data,
       'post'
     );
@@ -81,17 +102,14 @@ class JoblyApi {
     return res.user;
   }
  
- 
- 
   // obviously, you'll add a lot here ...
-
-
 }
 
 // for now, put token ("testuser" / "password" on class)
 JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
     "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
     "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+    
 
 
 export default JoblyApi;
