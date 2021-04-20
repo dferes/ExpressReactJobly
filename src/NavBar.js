@@ -3,40 +3,40 @@ import { NavLink } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from 'reactstrap';
 import './NavBar.css';
 
-const NavBar = ({ isLoggedIn }) => {
+const NavBar = ({ userToken, setIsLoggedIn, user }) => {
   return (
     <div>
       <Navbar expand='md'>
         <NavLink exact to='/' className='navbar-brand'>Jobly</NavLink>
         <Nav className='ml-auto' navbar>
-          {  isLoggedIn &&
+          {  userToken &&
             <NavItem>
               <NavLink to='/companies'>Companies</NavLink>  
             </NavItem>
           }
-          {  isLoggedIn &&
+          {  userToken &&
             <NavItem>
               <NavLink to='/jobs'>Jobs</NavLink>   
             </NavItem>
           }
-          {  isLoggedIn &&
+          {  userToken &&
             <NavItem>
               <NavLink to='/profile'>Profile</NavLink>  
             </NavItem>
           }
-          { !isLoggedIn &&
+          { !userToken &&
             <NavItem>
               <NavLink to='/login'>Login</NavLink> 
             </NavItem>
           }
-          { !isLoggedIn &&
+          { !userToken &&
             <NavItem>
               <NavLink to='/signup'>Sign Up</NavLink>  
             </NavItem>
           }
-          { isLoggedIn &&
+          { userToken &&
             <NavItem>
-              <NavLink to='/logout'>Log Out</NavLink>  
+              <NavLink onClick={ () => setIsLoggedIn(false)} to='/logout'>Log Out, {user.username}</NavLink>  
             </NavItem>
           }
         </Nav>
