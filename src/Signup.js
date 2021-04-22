@@ -6,7 +6,7 @@ import './Signup.css';
 
 const Signup = ({ signupFormData, handleFormChange, handleFormSubmit, errorMessage, userToken }) => {
   const history = useHistory();
-  if ( !errorMessage && userToken ) history.push('/');
+  if ( !errorMessage.signup && userToken ) history.push('/');
  
   const handleSignupChange = evt => handleFormChange(evt, false);
   const handleSignupSubmit = evt => handleFormSubmit(evt, 'signup', signupFormData);
@@ -66,9 +66,9 @@ const Signup = ({ signupFormData, handleFormChange, handleFormSubmit, errorMessa
               onChange={handleSignupChange}
             />
         </FormGroup>
-        { errorMessage && 
+        { errorMessage.signup && 
           <div className='bad-signup-div'>
-            <p className='bad-signup-message'>{errorMessage}</p>
+            <p className='bad-signup-message'>{errorMessage.signup}</p>
           </div>      
         }
         <Button color='primary' className='signup-form-button'>Sign Up</Button>
