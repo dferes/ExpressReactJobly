@@ -7,7 +7,6 @@ import Profile from './Profile';
 import Signup from './Signup';
 import Login from './Login';
 import CompanyDetails from './CompanyDetails';
-import Job from './Job';
 
 
 const Routes = ({ 
@@ -15,7 +14,7 @@ const Routes = ({
   jobs, 
   handleFormChange, 
   handleFormSubmit, 
-  userToken, 
+  isLoggedIn,
   user, 
   loginFormData, 
   signupFormData,
@@ -24,22 +23,19 @@ const Routes = ({
   return (
     <Switch>
       <Route exact path='/'>
-        <Home userToken={userToken} user={user} />
+        <Home isLoggedIn={isLoggedIn} user={user} />
       </Route>
       <Route exact path='/companies'>
-        <CompanyList companies={companies}/>
+        <CompanyList companies={companies} isLoggedIn={isLoggedIn}/>
       </Route>
       <Route exact path='/companies/:handle'>
-        <CompanyDetails />
+        <CompanyDetails isLoggedIn={isLoggedIn}/>
       </Route>
       <Route exact path='/jobs'>
-        <JobList jobs={jobs} />
-      </Route>
-      <Route exact path='/jobs/:id'>
-        <Job jobs={jobs} />
+        <JobList jobs={jobs} isLoggedIn={isLoggedIn} />
       </Route>
       <Route exact path='/profile'>
-        <Profile />
+        <Profile user={user} />
       </Route>
       <Route exact path='/signup'>
         <Signup 
@@ -47,7 +43,7 @@ const Routes = ({
           handleFormChange={handleFormChange}
           handleFormSubmit={handleFormSubmit}
           errorMessage={errorMessage}
-          userToken={userToken}
+          isLoggedIn={isLoggedIn}
         />
       </Route>
       <Route exact path='/login'>
@@ -56,7 +52,7 @@ const Routes = ({
           handleFormSubmit={handleFormSubmit}
           loginFormData={loginFormData}
           errorMessage={errorMessage}
-          userToken={userToken}
+          isLoggedIn={isLoggedIn}
         />
       </Route>
       <Redirect to='/' />
