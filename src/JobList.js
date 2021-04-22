@@ -1,11 +1,15 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Job from './Job';
 import useInputFilter from './hooks/useInputFilter';
 import { Button } from 'reactstrap';
 import './JobList.css';
 
 
-const JobList = ({ jobs }) => {
+const JobList = ({ jobs, isLoggedIn }) => {
+  const history = useHistory();
+  console.log('isLoggedIn: ', isLoggedIn);
+  if(!isLoggedIn) history.push('/');
 
   const [ 
     resultList, 
