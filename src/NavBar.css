@@ -5,7 +5,7 @@ nav {
   }
   
 .nav-item {
-  width: 110px;
+  width: 105px;
   text-align: center;
 }
 
@@ -41,4 +41,5 @@ nav a:not(.navbar-brand):hover {
 
 .logged-in-username {
   color: white;
+  width: 125px;
 }
