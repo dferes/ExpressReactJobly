@@ -37,9 +37,10 @@ function App() {
   useEffect( () => {
     const logout = () => {
       setUserToken('');
+      JoblyApi.setToken('');
       setUser({username:'', firstName:'', lastName:'', email:'', isAdmin:'', applications:[]});
     };
-    
+
     if (!isLoggedIn) logout();
   }, [isLoggedIn]);
 
@@ -56,53 +57,31 @@ function App() {
     });
   }
 
-  //  Refactor the 4 functions below into 2, pass the type of form data aswell as
-  //  the api methhod as a string
-
-  const handleLoginChange = evt => {
-    const { name, value } = evt.target;
-    setFormData( data => ({...data, [name]: value}));
+  const resetFormData = (apiMethod) => {
+    if(apiMethod === 'logIn') setFormData( { username: '', password: ''} );
+    else setSignupFormData( {username: '', password: '', firstName:'', lastName: '', email: ''});
   };
 
-  const handleLoginSubmit = async evt => {
+  const handleFormChange = (evt, login=false) => {
+    const { name, value } = evt.target;
+    if (login) setFormData( data => ({...data, [name]: value}));
+    else setSignupFormData(data => ({...data, [name]: value}))
+  };
+
+  const handleFormSubmit = async (evt, apiMethod, formInfo) => {
     evt.preventDefault();
     try {
-      let token = await JoblyApi.logIn(formData);
+      let token = await JoblyApi[ [apiMethod] ](formInfo);
       setUserToken(token);
-      // console.log('----------->TOKENS MATCH ? : ', JoblyApi.token === token );
       setValidCredentials(true);
-      
-      const user = await JoblyApi.getUser(formData.username);
-      setUserInfo(user);
-      setFormData({ username: '', password: ''});
+      const user_ = await JoblyApi.getUser(formInfo.username);
+      setUserInfo(user_);
+      resetFormData(apiMethod);
       setErrorMessage('');
       setIsLoggedIn(true);
     }catch(err) {
       setValidCredentials(false);
-    }
-  };
-
-
-  
-  const handleSignupChange = evt => {
-    const { name, value } = evt.target;
-    setSignupFormData( data => ({...data, [name]: value}));
-  };
-
-  const handleSignupSubmit = async evt => {
-    evt.preventDefault();
-    try {
-      const token = await JoblyApi.signup(signupFormData);
-      setUserToken(token);
-      setValidCredentials(true);
-
-      const user_ = await JoblyApi.getUser(signupFormData.username);
-      setUserInfo(user_);
-      setSignupFormData( {username: '', password: '', firstName:'', lastName: '', email: ''});
-      setErrorMessage('');
-      setIsLoggedIn(true);
-    }catch(err) {
-      setErrorMessage(err);  
+      setErrorMessage(err);
     }
   };
 
@@ -118,15 +97,13 @@ function App() {
           <Routes 
             companies={companies} 
             jobs={jobs} 
-            handleLoginChange={handleLoginChange}
-            handleLoginSubmit={handleLoginSubmit}
+            handleFormChange={handleFormChange}
+            handleFormSubmit={handleFormSubmit}
             userToken={userToken}
             user={user}
             formData={formData}
             validCredentials={validCredentials}
             signupFormData={signupFormData}
-            handleSignupChange={handleSignupChange}
-            handleSignupSubmit={handleSignupSubmit}
             errorMessage={errorMessage}
           />
         </main>
