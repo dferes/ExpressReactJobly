@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import './Login.css';
 
 
-const Login = ({ handleFormSubmit, handleFormChange, loginFormData, userToken, errorMessage  }) => {
+const Login = ({ handleFormSubmit, handleFormChange, loginFormData, isLoggedIn, errorMessage  }) => {
   const history = useHistory();
-  if(!errorMessage.login && userToken)  history.push('/');
+  if(!errorMessage.login && isLoggedIn)  history.push('/');
 
   const handleLoginChange = evt => handleFormChange(evt, true);
   const handleLoginSubmit = evt => handleFormSubmit(evt, 'logIn', loginFormData);
