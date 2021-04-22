@@ -58,7 +58,7 @@ const Profile = ({ user }) => {
               // onChange={}  
             />
         </FormGroup>
-        <Button className='user-profile-button' color='primary'>Submit</Button>   
+        <Button className='user-profile-button' color='primary'>Save Changes</Button>   
       </Form>
     </div>   
   );
