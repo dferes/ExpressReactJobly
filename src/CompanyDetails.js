@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import Job from './Job';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import JoblyApi from './api';
 import './CompanyDetails.css';
 
-const CompanyDetails = () => {
+const CompanyDetails = ({ isLoggedIn }) => {
+  const history = useHistory();
+  if(!isLoggedIn) history.push('/');
+
   const [ company, setCompany ] = useState({});
   const [ readyToRender, setReadyToRender ] = useState(false);
+  const [ noCompanyFound, setNoCompanyFound ] = useState(false);
   const { handle } = useParams();
   
   useEffect( () => {
     const getCompanyJobs = async () => {
-      const company = await JoblyApi.getCompany(handle);
-      setCompany(company);
-      setReadyToRender(true);
+      try {
+        const company = await JoblyApi.getCompany(handle);
+        setCompany(company);
+        setReadyToRender(true);
+      }catch(err) {
+        setNoCompanyFound(true);
+      }
     };
     
     getCompanyJobs();
-  }, [handle]); // double check this
+  }, [handle]);
   
   return (
     <div className='company-jobs-div'>
@@ -35,8 +43,14 @@ const CompanyDetails = () => {
           companyHandle={company.handle}
           salary={job.salary}
           equity={job.equity}
+          isLoggedIn={isLoggedIn}
         />  
       ))}
+      {  noCompanyFound && 
+        <div>
+          <h3>No Company found with handle: {handle} </h3>
+       </div> 
+      }
     </div>
   );  
 };
