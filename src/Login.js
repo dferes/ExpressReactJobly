@@ -4,9 +4,12 @@ import { useHistory } from 'react-router-dom';
 import './Login.css';
 
 
-const Login = ({ handleLoginSubmit, handleLoginChange, formData, validCredentials, userToken  }) => {
+const Login = ({ handleFormSubmit, handleFormChange, formData, validCredentials, userToken, errorMessage  }) => {
   const history = useHistory();
   if(validCredentials && userToken)  history.push('/');
+
+  const handleLoginChange = evt => handleFormChange(evt, true);
+  const handleLoginSubmit = evt => handleFormSubmit(evt, 'logIn', formData);
 
   return (
     <div className='login-form-div'>
@@ -35,7 +38,7 @@ const Login = ({ handleLoginSubmit, handleLoginChange, formData, validCredential
         </FormGroup>
         { !validCredentials && 
           <div className='bad-login-div'>
-            <p className='bad-login-message'>Invalid username/password</p>
+            <p className='bad-login-message'>{errorMessage}</p>
           </div>      
         }
         <Button color='primary' className='login-button'>Log In</Button>

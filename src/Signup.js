@@ -4,9 +4,12 @@ import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import './Signup.css';
 
 
-const Signup = ({ signupFormData, handleSignupChange, handleSignupSubmit, errorMessage, userToken }) => {
+const Signup = ({ signupFormData, handleFormChange, handleFormSubmit, errorMessage, userToken }) => {
   const history = useHistory();
   if ( !errorMessage && userToken ) history.push('/');
+ 
+  const handleSignupChange = evt => handleFormChange(evt, false);
+  const handleSignupSubmit = evt => handleFormSubmit(evt, 'signup', signupFormData);
 
   return (
     <div className='signup-form-div'>
