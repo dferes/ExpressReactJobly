@@ -3,46 +3,42 @@ import { NavLink } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from 'reactstrap';
 import './NavBar.css';
 
-const NavBar = ({ userToken, setIsLoggedIn, user }) => {
+const NavBar = ({ isLoggedIn, setIsLoggedIn, user }) => {
   return (
     <div>
       <Navbar expand='md'>
         <NavLink exact to='/' className='navbar-brand'>Jobly</NavLink>
-        {  userToken &&
+        {  isLoggedIn &&
         <Nav className='mr-auto'>
           <NavItem className='logged-in-username'>( {user.username} )</NavItem>
         </Nav> 
         }
         <Nav className='ml-auto' navbar>
-          {  userToken &&
-            <NavItem>
-              <NavLink to='/companies'>Companies</NavLink>  
-            </NavItem>
+          {  isLoggedIn &&
+            <>
+              <NavItem>
+                <NavLink to='/companies'>Companies</NavLink>  
+              </NavItem>
+              <NavItem>
+                <NavLink to='/jobs'>Jobs</NavLink>   
+              </NavItem>
+              <NavItem>
+                <NavLink to='/profile'>Profile</NavLink>  
+              </NavItem>
+              <NavItem>
+                <NavLink onClick={ () => setIsLoggedIn(false)} to='/logout'>Log Out</NavLink>  
+              </NavItem>
+            </>
           }
-          {  userToken &&
-            <NavItem>
-              <NavLink to='/jobs'>Jobs</NavLink>   
-            </NavItem>
-          }
-          {  userToken &&
-            <NavItem>
-              <NavLink to='/profile'>Profile</NavLink>  
-            </NavItem>
-          }
-          { !userToken &&
-            <NavItem>
-              <NavLink to='/login'>Login</NavLink> 
-            </NavItem>
-          }
-          { !userToken &&
-            <NavItem>
-              <NavLink to='/signup'>Sign Up</NavLink>  
-            </NavItem>
-          }
-          { userToken &&
-            <NavItem>
-              <NavLink onClick={ () => setIsLoggedIn(false)} to='/logout'>Log Out</NavLink>  
-            </NavItem>
+          { !isLoggedIn &&
+            <>
+              <NavItem>
+                <NavLink to='/login'>Login</NavLink> 
+              </NavItem>
+              <NavItem>
+                <NavLink to='/signup'>Sign Up</NavLink>  
+              </NavItem>
+            </>
           }
         </Nav>
       </Navbar>
