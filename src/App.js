@@ -3,33 +3,36 @@ import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import NavBar from './NavBar';
 import Routes from './Routes';
+import useLocalStorage from './hooks/useLocalStorage';
 import JoblyApi from './api';
+
 
 function App() {
   const emptyUserData = {username: '', firstName: '', lastName: '', email: '', isAdmin: '', applications: []};
   const [ companies, setCompanies ] = useState([]);
   const [ jobs, setJobs ] = useState([]);
-  const [ userToken, setUserToken ] = useState('');
-  const [ user, setUser ] = useState( emptyUserData );
-  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
-  // Combine state for userToken and user by putting the token in the user info
-  const [ formData, setFormData ] = useState({ username: '', password: ''});
-  const [ validCredentials, setValidCredentials ] = useState(true);
+
+  const [ loginFormData, setLoginFormData ] = useState({ username: '', password: ''});
   const [ signupFormData, setSignupFormData ] = useState( emptyUserData );
-  const [ errorMessage, setErrorMessage ] = useState('');
+  const [ errorMessage, setErrorMessage ] = useState({ login: '', signup: ''});
+  
+  const [ userToken, setUserToken ] = useLocalStorage('userToken', '');
+  const [ user, setUser ] = useLocalStorage('user',  emptyUserData );
+  const [ isLoggedIn, setIsLoggedIn ] = useLocalStorage('isLoggedIn', false);
+  
 
   useEffect( () => {
     const getCompanies = async () => {
       const allCompanies = await JoblyApi.getAllCompanies();
       setCompanies(allCompanies);
-    }
+    };
 
     const getJobs = async () => {
       const allJobs = await JoblyApi.getAllJobs();
       setJobs(allJobs);
-    }
-
-    getCompanies(); // await for these 2??
+    };
+    
+    getCompanies();
     getJobs();
   }, []);
 
@@ -37,12 +40,11 @@ function App() {
   useEffect( () => {
     const logout = () => {
       setUserToken('');
-      JoblyApi.setToken('');
       setUser({username:'', firstName:'', lastName:'', email:'', isAdmin:'', applications:[]});
     };
 
     if (!isLoggedIn) logout();
-  }, [isLoggedIn]);
+  }, [isLoggedIn, setUserToken, setUser]);
 
 
 
@@ -55,16 +57,16 @@ function App() {
       isAdmin:      user.isAdmin,
       applications: user.applications
     });
-  }
+  };
 
   const resetFormData = (apiMethod) => {
-    if(apiMethod === 'logIn') setFormData( { username: '', password: ''} );
+    if(apiMethod === 'logIn') setLoginFormData( { username: '', password: ''} );
     else setSignupFormData( {username: '', password: '', firstName:'', lastName: '', email: ''});
   };
 
   const handleFormChange = (evt, login=false) => {
     const { name, value } = evt.target;
-    if (login) setFormData( data => ({...data, [name]: value}));
+    if (login) setLoginFormData( data => ({...data, [name]: value}));
     else setSignupFormData(data => ({...data, [name]: value}))
   };
 
@@ -73,15 +75,15 @@ function App() {
     try {
       let token = await JoblyApi[ [apiMethod] ](formInfo);
       setUserToken(token);
-      setValidCredentials(true);
       const user_ = await JoblyApi.getUser(formInfo.username);
       setUserInfo(user_);
+      setErrorMessage({ login: '', signup: '' });
       resetFormData(apiMethod);
-      setErrorMessage('');
       setIsLoggedIn(true);
+      console.log('USER: ', user);
     }catch(err) {
-      setValidCredentials(false);
-      setErrorMessage(err);
+      if (apiMethod === 'logIn') setErrorMessage({login: err, signup: ''});
+      else setErrorMessage({login: '', signup: err});
     }
   };
 
@@ -101,8 +103,7 @@ function App() {
             handleFormSubmit={handleFormSubmit}
             userToken={userToken}
             user={user}
-            formData={formData}
-            validCredentials={validCredentials}
+            loginFormData={loginFormData}
             signupFormData={signupFormData}
             errorMessage={errorMessage}
           />
