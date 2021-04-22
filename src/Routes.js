@@ -17,8 +17,7 @@ const Routes = ({
   handleFormSubmit, 
   userToken, 
   user, 
-  formData, 
-  validCredentials,
+  loginFormData, 
   signupFormData,
   errorMessage
 }) => {
@@ -55,9 +54,8 @@ const Routes = ({
         <Login 
           handleFormChange={handleFormChange}
           handleFormSubmit={handleFormSubmit}
-          formData={formData}
+          loginFormData={loginFormData}
           errorMessage={errorMessage}
-          validCredentials={validCredentials}
           userToken={userToken}
         />
       </Route>
