@@ -40,7 +40,7 @@ function App() {
   useEffect( () => {
     const logout = () => {
       setUserToken('');
-      setUser({username:'', firstName:'', lastName:'', email:'', isAdmin:'', applications:[]});
+      setUser({});
     };
 
     if (!isLoggedIn) logout();
@@ -59,9 +59,9 @@ function App() {
     });
   };
 
-  const resetFormData = (apiMethod) => {
-    if(apiMethod === 'logIn') setLoginFormData( { username: '', password: ''} );
-    else setSignupFormData( {username: '', password: '', firstName:'', lastName: '', email: ''});
+  const resetFormData = () => {
+    setLoginFormData({});
+    setSignupFormData({});
   };
 
   const handleFormChange = (evt, login=false) => {
@@ -78,9 +78,8 @@ function App() {
       const user_ = await JoblyApi.getUser(formInfo.username);
       setUserInfo(user_);
       setErrorMessage({ login: '', signup: '' });
-      resetFormData(apiMethod);
+      resetFormData();
       setIsLoggedIn(true);
-      console.log('USER: ', user);
     }catch(err) {
       if (apiMethod === 'logIn') setErrorMessage({login: err, signup: ''});
       else setErrorMessage({login: '', signup: err});
@@ -91,7 +90,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <NavBar 
-          userToken={userToken} 
+          isLoggedIn={isLoggedIn} 
           setIsLoggedIn={setIsLoggedIn}
           user={user} 
         />
@@ -102,6 +101,7 @@ function App() {
             handleFormChange={handleFormChange}
             handleFormSubmit={handleFormSubmit}
             userToken={userToken}
+            isLoggedIn={isLoggedIn}
             user={user}
             loginFormData={loginFormData}
             signupFormData={signupFormData}
