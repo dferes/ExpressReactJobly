@@ -4,9 +4,9 @@ import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import './Signup.css';
 
 
-const Signup = ({ signupFormData, handleFormChange, handleFormSubmit, errorMessage, userToken }) => {
+const Signup = ({ signupFormData, handleFormChange, handleFormSubmit, errorMessage, isLoggedIn }) => {
   const history = useHistory();
-  if ( !errorMessage.signup && userToken ) history.push('/');
+  if ( !errorMessage.signup && isLoggedIn ) history.push('/');
  
   const handleSignupChange = evt => handleFormChange(evt, false);
   const handleSignupSubmit = evt => handleFormSubmit(evt, 'signup', signupFormData);
