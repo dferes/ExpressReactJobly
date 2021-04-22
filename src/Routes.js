@@ -13,15 +13,13 @@ import Job from './Job';
 const Routes = ({ 
   companies, 
   jobs, 
-  handleLoginChange, 
-  handleLoginSubmit, 
+  handleFormChange, 
+  handleFormSubmit, 
   userToken, 
   user, 
   formData, 
   validCredentials,
   signupFormData,
-  handleSignupChange,
-  handleSignupSubmit,
   errorMessage
 }) => {
   return (
@@ -47,17 +45,18 @@ const Routes = ({
       <Route exact path='/signup'>
         <Signup 
           signupFormData={signupFormData}
-          handleSignupChange={handleSignupChange}
-          handleSignupSubmit={handleSignupSubmit}
+          handleFormChange={handleFormChange}
+          handleFormSubmit={handleFormSubmit}
           errorMessage={errorMessage}
           userToken={userToken}
         />
       </Route>
       <Route exact path='/login'>
         <Login 
-          handleLoginChange={handleLoginChange}
-          handleLoginSubmit={handleLoginSubmit}
+          handleFormChange={handleFormChange}
+          handleFormSubmit={handleFormSubmit}
           formData={formData}
+          errorMessage={errorMessage}
           validCredentials={validCredentials}
           userToken={userToken}
         />
