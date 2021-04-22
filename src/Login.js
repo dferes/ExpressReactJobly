@@ -4,12 +4,12 @@ import { useHistory } from 'react-router-dom';
 import './Login.css';
 
 
-const Login = ({ handleFormSubmit, handleFormChange, formData, validCredentials, userToken, errorMessage  }) => {
+const Login = ({ handleFormSubmit, handleFormChange, loginFormData, userToken, errorMessage  }) => {
   const history = useHistory();
-  if(validCredentials && userToken)  history.push('/');
+  if(!errorMessage.login && userToken)  history.push('/');
 
   const handleLoginChange = evt => handleFormChange(evt, true);
-  const handleLoginSubmit = evt => handleFormSubmit(evt, 'logIn', formData);
+  const handleLoginSubmit = evt => handleFormSubmit(evt, 'logIn', loginFormData);
 
   return (
     <div className='login-form-div'>
@@ -22,7 +22,7 @@ const Login = ({ handleFormSubmit, handleFormChange, formData, validCredentials,
               type='text'
               name='username'
               id='username'
-              value={formData.username}
+              value={loginFormData.username}
               onChange={handleLoginChange}  
             />
         </FormGroup>
@@ -32,13 +32,13 @@ const Login = ({ handleFormSubmit, handleFormChange, formData, validCredentials,
               type='password'
               name='password'
               id='password'
-              value={formData.password}
+              value={loginFormData.password}
               onChange={handleLoginChange}  
             />
         </FormGroup>
-        { !validCredentials && 
+        { errorMessage.login && 
           <div className='bad-login-div'>
-            <p className='bad-login-message'>{errorMessage}</p>
+            <p className='bad-login-message'>{errorMessage.login}</p>
           </div>      
         }
         <Button color='primary' className='login-button'>Log In</Button>
