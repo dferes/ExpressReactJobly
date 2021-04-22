@@ -2,9 +2,14 @@ import React from 'react';
 import './CompanyList.css';
 import { Button } from 'reactstrap';
 import Company from './Company';
+import { useHistory } from 'react-router-dom';
 import useInputFilter from './hooks/useInputFilter';
 
-const CompanyList = ({ companies }) => {
+const CompanyList = ({ companies, isLoggedIn }) => {
+  const history = useHistory();
+  console.log('isLoggedIn: ', isLoggedIn);
+  if(!isLoggedIn) history.push('/');
+  
   const [ 
     resultList, 
     filter, 
