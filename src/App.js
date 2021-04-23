@@ -14,6 +14,7 @@ function App() {
 
   const [ loginFormData, setLoginFormData ] = useState({ username: '', password: ''});
   const [ signupFormData, setSignupFormData ] = useState( emptyUserData );
+  const [ userFormData, setUserFormData ] = useState({});
   const [ errorMessage, setErrorMessage ] = useState({ login: '', signup: ''});
   
   const [ userToken, setUserToken ] = useLocalStorage('userToken', '');
@@ -62,27 +63,35 @@ function App() {
   const resetFormData = () => {
     setLoginFormData({});
     setSignupFormData({});
+    setUserFormData({});
   };
 
-  const handleFormChange = (evt, login=false) => {
+  const handleFormChange = (evt, login=false, signup=false) => {
     const { name, value } = evt.target;
-    if (login) setLoginFormData( data => ({...data, [name]: value}));
-    else setSignupFormData(data => ({...data, [name]: value}))
+    if (login) setLoginFormData( data => ({...data, [name]: value}) );
+    else if(signup)setSignupFormData( data => ({...data, [name]: value}) );
+    else setUserFormData( data => ({...data, [name]: value}) );
   };
 
   const handleFormSubmit = async (evt, apiMethod, formInfo) => {
     evt.preventDefault();
     try {
-      let token = await JoblyApi[ [apiMethod] ](formInfo);
-      setUserToken(token);
+      if(['logIn', 'submit'].includes(apiMethod)){
+        const token = await JoblyApi[ [apiMethod] ](formInfo);
+        setUserToken(token);
+      }else {
+        JoblyApi.setToken(userToken); // Don't need this here if using the logIn method (in JoblyApi) to validate password
+        await JoblyApi[ [apiMethod] ](formInfo);
+      }
       const user_ = await JoblyApi.getUser(formInfo.username);
       setUserInfo(user_);
-      setErrorMessage({ login: '', signup: '' });
       resetFormData();
+      setErrorMessage({ login: '', signup: '', update: '' });
       setIsLoggedIn(true);
     }catch(err) {
-      if (apiMethod === 'logIn') setErrorMessage({login: err, signup: ''});
-      else setErrorMessage({login: '', signup: err});
+      if (apiMethod === 'logIn') setErrorMessage({ login: err });
+      else if (apiMethod === 'signup') setErrorMessage({ signup: err });
+      else setErrorMessage({ update: err });
     }
   };
 
@@ -105,6 +114,7 @@ function App() {
             user={user}
             loginFormData={loginFormData}
             signupFormData={signupFormData}
+            userFormData={userFormData}
             errorMessage={errorMessage}
           />
         </main>
