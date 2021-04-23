@@ -48,10 +48,22 @@
   min-width: 20em;
   width: 40.5vw;
   max-width: 29em;    
-
   position: absolute;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   margin-top: 1.2em;
+}
+
+.bad-update-div {
+  background-color: rgba(226, 31, 31, 0.3);
+  min-height: 2.5em;
+  border-radius: 0.7em;
+  margin-bottom: 0.5em;
+}
+    
+.bad-update-message {
+  color: rgb(128, 55, 55);
+  text-align: center;
+  padding: 0.5em;
 }
