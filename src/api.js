@@ -1,4 +1,5 @@
 import axios from "axios";
+import cloneDeep from 'lodash/cloneDeep';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
@@ -22,8 +23,8 @@ class JoblyApi {
     console.debug("API Call:", endpoint, data, method);
 
     const url = `${BASE_URL}/${endpoint}`;
-    const headers = { Authorization: `Bearer ${this.token}` };
-    // const params = (method === "get") // wtf is this here?
+    const headers = { Authorization: `Bearer ${this.getToken()}` };
+    // const params = (method === "get")
     //     ? data
     //     : {};
     const params = data;
@@ -35,9 +36,14 @@ class JoblyApi {
       throw Array.isArray(message) ? message : [message];
     }
   }
-
   // Individual API routes
 
+
+  /** Checks user's username and the password passed with the 
+   * form data and, if valid, returns a token signed with jwt.
+   * The payload is the username and password.
+   * Note that the token is also updated in this class.
+   */ 
   static async logIn(formData) {
     const { username, password } = formData;
     const data = {
@@ -55,8 +61,13 @@ class JoblyApi {
     return res.token;
   }
 
+   /** If all data passed in formData is valid, a new user is created
+    *  and added to the database (the user table). A token is created 
+    *  and signed with jwt. The payload is the username and password.
+    *  Note that the token is also updated in this class. 
+   */ 
   static async signup(formData){
-    const { username, password, firstName, lastName, email } = formData;
+    const { username, password, firstName, lastName, email } = formData; // why did I do this?? Just pass formData...
     const data = {
       username: username,
       password: password,
@@ -74,6 +85,34 @@ class JoblyApi {
     this.setToken(res.token);  
     return res.token;
   }
+
+  /** Accepts { username, firstname, lastName, email, password }
+   *  and can update { firstName, lastName, email } in the database
+   *  and will return { firstName, lastName, email }. Only username
+   *  and password are required.
+   */ 
+  static async update(formData) { 
+    try {
+      await this.logIn({ 
+        username: formData.username,
+        password: formData.password
+      });
+     }catch(err) {
+       console.log('------------->', err)
+     }
+    const data = cloneDeep(formData);
+    delete data.username;
+    delete data.password;
+    
+    let res = await this.request(
+      `users/${formData.username}`, 
+      data,
+      'patch'
+    );
+    
+    return res.user;
+  }
+
 
   /** Get details on a company by handle. */
   static async getCompany(handle) {
