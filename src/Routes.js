@@ -18,6 +18,7 @@ const Routes = ({
   user, 
   loginFormData, 
   signupFormData,
+  userFormData,
   errorMessage
 }) => {
   return (
@@ -35,7 +36,13 @@ const Routes = ({
         <JobList jobs={jobs} isLoggedIn={isLoggedIn} />
       </Route>
       <Route exact path='/profile'>
-        <Profile user={user} />
+        <Profile 
+          user={user}
+          handleFormChange={handleFormChange}
+          handleFormSubmit={handleFormSubmit}
+          userFormData={userFormData}
+          errorMessage={errorMessage} 
+        />
       </Route>
       <Route exact path='/signup'>
         <Signup 
