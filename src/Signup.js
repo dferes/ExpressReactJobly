@@ -8,7 +8,7 @@ const Signup = ({ signupFormData, handleFormChange, handleFormSubmit, errorMessa
   const history = useHistory();
   if ( !errorMessage.signup && isLoggedIn ) history.push('/');
  
-  const handleSignupChange = evt => handleFormChange(evt, false);
+  const handleSignupChange = evt => handleFormChange(evt, false, true);
   const handleSignupSubmit = evt => handleFormSubmit(evt, 'signup', signupFormData);
 
   return (
