@@ -7,7 +7,6 @@ import useInputFilter from './hooks/useInputFilter';
 
 const CompanyList = ({ companies, isLoggedIn }) => {
   const history = useHistory();
-  console.log('isLoggedIn: ', isLoggedIn);
   if(!isLoggedIn) history.push('/');
   
   const [ 
