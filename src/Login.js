@@ -6,7 +6,7 @@ import './Login.css';
 
 const Login = ({ handleFormSubmit, handleFormChange, loginFormData, isLoggedIn, errorMessage  }) => {
   const history = useHistory();
-  if(!errorMessage.login && isLoggedIn)  history.push('/');
+  if(!errorMessage.logIn && isLoggedIn)  history.push('/');
 
   const handleLoginChange = evt => handleFormChange(evt, true, false);
   const handleLoginSubmit = evt => handleFormSubmit(evt, 'logIn', loginFormData);
@@ -36,9 +36,9 @@ const Login = ({ handleFormSubmit, handleFormChange, loginFormData, isLoggedIn, 
               onChange={handleLoginChange}  
             />
         </FormGroup>
-        { errorMessage.login && 
+        { errorMessage.logIn && 
           <div className='bad-login-div'>
-            <p className='bad-login-message'>{errorMessage.login}</p>
+            <p className='bad-login-message'>{errorMessage.logIn}</p>
           </div>      
         }
         <Button color='primary' className='login-button'>Log In</Button>
