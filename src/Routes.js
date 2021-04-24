@@ -21,7 +21,8 @@ const Routes = ({
   userFormData,
   errorMessage,
   showSuccessMessage,
-  setShowSuccessMessage
+  setShowSuccessMessage,
+  setJobAppyId
 }) => {
   return (
     <Switch>
@@ -32,10 +33,18 @@ const Routes = ({
         <CompanyList companies={companies} isLoggedIn={isLoggedIn}/>
       </Route>
       <Route exact path='/companies/:handle'>
-        <CompanyDetails isLoggedIn={isLoggedIn}/>
+        <CompanyDetails 
+          isLoggedIn={isLoggedIn}
+          setJobAppyId={setJobAppyId}
+          user={user}  
+        />
       </Route>
       <Route exact path='/jobs'>
-        <JobList jobs={jobs} isLoggedIn={isLoggedIn} />
+        <JobList jobs={jobs} 
+          isLoggedIn={isLoggedIn} 
+          setJobAppyId={setJobAppyId}
+          user={user}  
+        />
       </Route>
       <Route exact path='/profile'>
         <Profile 
