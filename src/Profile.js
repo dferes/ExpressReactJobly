@@ -1,19 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
 import './Profile.css';
 
-const Profile = ({ errorMessage, user, userFormData, handleFormChange, handleFormSubmit }) => {
-  const [ redirect, setRedirect ] = useState(false);
+const Profile = ({ errorMessage, user, userFormData, handleFormChange, handleFormSubmit, showSuccessMessage, setShowSuccessMessage }) => {
   const history = useHistory();
-  if(!user.username || (!errorMessage.update && redirect) ) history.push('/');
+  if(!user.username) history.push('/');
 
+  const [ successfulUpdate, setSuccessfulUpdate ] = useState(false);
   const handleUpdateChange = evt => handleFormChange(evt, false, false);
   const handleUpdateSubmit = evt => {
     handleFormSubmit(evt, 'update', {...userFormData, username: user.username});
-    setRedirect(true);
   };
+
+
+  useEffect( () => {
+    setSuccessfulUpdate(showSuccessMessage);
+
+    const timeout = setTimeout( () => {
+      setShowSuccessMessage(false);
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [showSuccessMessage, setShowSuccessMessage]);
     
+
   return (
     <div className='user-profile-div'>
       <h2 className='user-profile-message'>Profile</h2>
@@ -58,7 +69,7 @@ const Profile = ({ errorMessage, user, userFormData, handleFormChange, handleFor
         <FormGroup>
           <Label for='password-confirm'>Confirm Password</Label>
           <Input
-            required='true'
+            required={true}
             type='password'
             name='password'
             id='password'
@@ -69,6 +80,11 @@ const Profile = ({ errorMessage, user, userFormData, handleFormChange, handleFor
         { errorMessage.update && 
           <div className='bad-update-div'>
             <p className='bad-update-message'>{errorMessage.update}</p>
+          </div>      
+        }
+        { successfulUpdate && 
+          <div className='success-update-div'>
+            <p className='success-update-message'>Your changes have been saved!</p>
           </div>      
         }
         <Button className='user-profile-button' color='primary'>Save Changes</Button>   
