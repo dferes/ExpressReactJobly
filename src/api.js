@@ -12,7 +12,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
  */
 
 class JoblyApi {
-  // the token for interactive with the API will be stored here.
+
   static token;
 
   static setToken = (token_) => this.token = token_;
@@ -20,13 +20,8 @@ class JoblyApi {
   static getToken = () => this.token;
 
   static async request(endpoint, data = {}, method = "get") {
-    console.debug("API Call:", endpoint, data, method);
-
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${this.getToken()}` };
-    // const params = (method === "get")
-    //     ? data
-    //     : {};
     const params = data;
     try {
       return (await axios({ url, method, data, params, headers })).data;
@@ -36,8 +31,6 @@ class JoblyApi {
       throw Array.isArray(message) ? message : [message];
     }
   }
-  // Individual API routes
-
 
   /** Checks user's username and the password passed with the 
    * form data and, if valid, returns a token signed with jwt.
@@ -123,7 +116,6 @@ class JoblyApi {
     return res.applied;
   }
 
-
   /** Get details on a company by handle. */
   static async getCompany(handle) {
     let res = await this.request(`companies/${handle}`);
@@ -136,7 +128,6 @@ class JoblyApi {
     let res = await this.request('companies/', data);
     return res.companies;
   }
-
 
   /** Get details on a job by id */
   static async getJob(id) {
@@ -156,7 +147,6 @@ class JoblyApi {
     let res = await this.request(`users/${username}`);
     return res.user;
   }
- 
 
 }
 
