@@ -50,18 +50,6 @@ function App() {
   }, [isLoggedIn, setUserToken, setUser]);
 
 
-
-  const setUserInfo = user => {
-    setUser({
-      username:     user.username,
-      firstName:    user.firstName,
-      lastName:     user.lastName,
-      email:        user.email,
-      isAdmin:      user.isAdmin,
-      applications: user.applications
-    });
-  };
-
   const resetFormData = () => {
     setLoginFormData({});
     setSignupFormData({});
@@ -86,10 +74,10 @@ function App() {
         await JoblyApi[ [apiMethod] ](formInfo);
       }
       const user_ = await JoblyApi.getUser(formInfo.username);
-      setUserInfo(user_);
+      setUser(user_);
       resetFormData();
       setErrorMessage({});
-      setShowSuccessMessage(true);
+      setShowSuccessMessage(apiMethod==='update'? true: false);
       setIsLoggedIn(true);
     }catch(err) { setErrorMessage({ [apiMethod]: err }); }
   };
