@@ -92,24 +92,24 @@ class JoblyApi {
    *  and password are required.
    */ 
   static async update(formData) { 
-    try {
-      await this.logIn({ 
-        username: formData.username,
-        password: formData.password
-      });
-     }catch(err) {
-       console.log('------------->', err)
-     }
+    const { username, password } = formData;
+ 
+    await this.request( // Verify the password is correct before updating user
+      'auth/token', 
+      { username: username, password: password },
+      'post'
+    );
+
     const data = cloneDeep(formData);
     delete data.username;
     delete data.password;
-    
+      
     let res = await this.request(
       `users/${formData.username}`, 
       data,
       'patch'
     );
-    
+      
     return res.user;
   }
 
