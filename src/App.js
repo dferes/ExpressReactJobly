@@ -15,13 +15,14 @@ function App() {
   const [ loginFormData, setLoginFormData ] = useState({ username: '', password: ''});
   const [ signupFormData, setSignupFormData ] = useState( emptyUserData );
   const [ userFormData, setUserFormData ] = useState({});
-  const [ errorMessage, setErrorMessage ] = useState({ login: '', signup: ''});
-  
+  const [ errorMessage, setErrorMessage ] = useState({});
+  const [ showSuccessMessage, setShowSuccessMessage ] = useState(false);
+
   const [ userToken, setUserToken ] = useLocalStorage('userToken', '');
   const [ user, setUser ] = useLocalStorage('user',  emptyUserData );
   const [ isLoggedIn, setIsLoggedIn ] = useLocalStorage('isLoggedIn', false);
   
-
+ /** Retrieves a list of all companies and all jobs on first render */
   useEffect( () => {
     const getCompanies = async () => {
       const allCompanies = await JoblyApi.getAllCompanies();
@@ -37,7 +38,7 @@ function App() {
     getJobs();
   }, []);
 
-
+  /** Logs the user out if isLoggedIn changes to false */
   useEffect( () => {
     const logout = () => {
       setUserToken('');
@@ -80,19 +81,16 @@ function App() {
         const token = await JoblyApi[ [apiMethod] ](formInfo);
         setUserToken(token);
       }else {
-        JoblyApi.setToken(userToken); // Don't need this here if using the logIn method (in JoblyApi) to validate password
+        JoblyApi.setToken(userToken);
         await JoblyApi[ [apiMethod] ](formInfo);
       }
       const user_ = await JoblyApi.getUser(formInfo.username);
       setUserInfo(user_);
       resetFormData();
-      setErrorMessage({ login: '', signup: '', update: '' });
+      setErrorMessage({});
+      setShowSuccessMessage(true);
       setIsLoggedIn(true);
-    }catch(err) {
-      if (apiMethod === 'logIn') setErrorMessage({ login: err });
-      else if (apiMethod === 'signup') setErrorMessage({ signup: err });
-      else setErrorMessage({ update: err });
-    }
+    }catch(err) { setErrorMessage({ [apiMethod]: err }); }
   };
 
   return (
@@ -116,6 +114,8 @@ function App() {
             signupFormData={signupFormData}
             userFormData={userFormData}
             errorMessage={errorMessage}
+            showSuccessMessage={showSuccessMessage}
+            setShowSuccessMessage={setShowSuccessMessage}
           />
         </main>
       </BrowserRouter>
