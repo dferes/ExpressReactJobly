@@ -7,7 +7,7 @@ const Profile = ({ errorMessage, user, userFormData, handleFormChange, handleFor
   const history = useHistory();
   if(!user.username) history.push('/');
 
-  const [ successfulUpdate, setSuccessfulUpdate ] = useState(false);
+  const [ successfulUpdate, setSuccessfulUpdate ] = useState(showSuccessMessage);
   const handleUpdateChange = evt => handleFormChange(evt, false, false);
   const handleUpdateSubmit = evt => {
     handleFormSubmit(evt, 'update', {...userFormData, username: user.username});
