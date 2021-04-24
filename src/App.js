@@ -17,6 +17,7 @@ function App() {
   const [ userFormData, setUserFormData ] = useState({});
   const [ errorMessage, setErrorMessage ] = useState({});
   const [ showSuccessMessage, setShowSuccessMessage ] = useState(false);
+  const [ jobApplyId, setJobAppyId] = useState(''); 
 
   const [ userToken, setUserToken ] = useLocalStorage('userToken', '');
   const [ user, setUser ] = useLocalStorage('user',  emptyUserData );
@@ -93,6 +94,20 @@ function App() {
     }catch(err) { setErrorMessage({ [apiMethod]: err }); }
   };
 
+  
+  useEffect( () => {
+    const apply = async () => {
+      JoblyApi.setToken(userToken);
+      await JoblyApi.applyToJob( user.username, jobApplyId );  
+      setJobAppyId('');
+
+      const user_ = await JoblyApi.getUser(user.username);
+      setUser(user_);
+    };
+
+    if(jobApplyId!=='') apply();
+  }, [jobApplyId, user.username, userToken, setUser ]); 
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -116,6 +131,7 @@ function App() {
             errorMessage={errorMessage}
             showSuccessMessage={showSuccessMessage}
             setShowSuccessMessage={setShowSuccessMessage}
+            setJobAppyId={setJobAppyId}
           />
         </main>
       </BrowserRouter>
