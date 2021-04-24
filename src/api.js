@@ -91,7 +91,7 @@ class JoblyApi {
    *  and will return { firstName, lastName, email }. Only username
    *  and password are required.
    */ 
-  static async update(formData) { 
+  static async update(formData) { // rename this to updateUser
     const { username, password } = formData;
  
     await this.request( // Verify the password is correct before updating user
@@ -111,6 +111,16 @@ class JoblyApi {
     );
       
     return res.user;
+  }
+
+  static async applyToJob(username, jobId) {
+    let res = await this.request(
+      `users/${username}/jobs/${jobId}`,
+      { username: username, id: jobId },
+      'post'
+    );
+
+    return res.applied;
   }
 
 
