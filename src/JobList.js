@@ -6,9 +6,8 @@ import { Button } from 'reactstrap';
 import './JobList.css';
 
 
-const JobList = ({ jobs, isLoggedIn }) => {
+const JobList = ({ jobs, isLoggedIn, setJobAppyId, user }) => {
   const history = useHistory();
-  console.log('isLoggedIn: ', isLoggedIn);
   if(!isLoggedIn) history.push('/');
 
   const [ 
@@ -37,12 +36,14 @@ const JobList = ({ jobs, isLoggedIn }) => {
       </div>    
       { !isEmpty && resultList.map( job => (
         <Job 
+          user={user}
           key={job.id}
           id={job.id}
           title={job.title}
           companyHandle={job.companyHandle}
           salary={job.salary}
           equity={job.equity}
+          setJobAppyId={setJobAppyId}
         />
       ))}
       { isEmpty && <p className='no-results-msg'>Sorry, no results were found!</p> }  

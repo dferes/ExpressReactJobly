@@ -4,7 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import JoblyApi from './api';
 import './CompanyDetails.css';
 
-const CompanyDetails = ({ isLoggedIn }) => {
+const CompanyDetails = ({ isLoggedIn, user, setJobAppyId }) => {
   const history = useHistory();
   if(!isLoggedIn) history.push('/');
 
@@ -37,6 +37,7 @@ const CompanyDetails = ({ isLoggedIn }) => {
       }  
       { readyToRender && company.jobs.map( job => (
         <Job 
+          user={user}
           key={job.id}
           id={job.id}
           title={job.title}
@@ -44,6 +45,7 @@ const CompanyDetails = ({ isLoggedIn }) => {
           salary={job.salary}
           equity={job.equity}
           isLoggedIn={isLoggedIn}
+          setJobAppyId={setJobAppyId}
         />  
       ))}
       {  noCompanyFound && 
