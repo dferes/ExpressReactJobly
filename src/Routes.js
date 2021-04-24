@@ -19,7 +19,9 @@ const Routes = ({
   loginFormData, 
   signupFormData,
   userFormData,
-  errorMessage
+  errorMessage,
+  showSuccessMessage,
+  setShowSuccessMessage
 }) => {
   return (
     <Switch>
@@ -41,7 +43,9 @@ const Routes = ({
           handleFormChange={handleFormChange}
           handleFormSubmit={handleFormSubmit}
           userFormData={userFormData}
-          errorMessage={errorMessage} 
+          errorMessage={errorMessage}
+          showSuccessMessage={showSuccessMessage}
+          setShowSuccessMessage={setShowSuccessMessage} 
         />
       </Route>
       <Route exact path='/signup'>
