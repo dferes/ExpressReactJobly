@@ -1,0 +1,37 @@
+.company-link:hover {
+  text-decoration: none; 
+}
+  
+.company-div {
+  width: 62.5vw;
+  background-color: rgba(251, 245, 245, 0.75);  
+  box-shadow: 1px 0px 1px 1px #423c3c;
+  border-radius: 0.75em;
+}
+  
+.company-div:hover {
+  box-shadow: 1px 5px 10px 5px rgb(70, 70, 70);
+}
+ 
+.company-name {
+  padding-top: 1.35em;
+  padding-left: 1.3em;
+  padding-right: 1.3em;
+  padding-bottom: 0em;
+  font-size: 1em;
+  color: black;  
+}
+  
+.company-description {
+  padding-bottom: 3em;
+  padding-left: 1.7em;
+  padding-right: 1.3em;
+  color: black;
+  font-size: 0.8em;
+}
+     
+.company-name:hover,
+.company-description:hover {
+  color: blue;  
+}
+

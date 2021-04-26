@@ -1,0 +1,82 @@
+.user-profile-form {
+  padding: 1.5em;
+  margin-top: 1.5em;
+  background-color: white;
+  padding-bottom: 3.5em;
+  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.5);
+  margin-bottom: 4em;
+  position: relative;
+}
+
+.user-profile-form input {
+  background-color: rgba(38, 38, 38, 0.125);  
+}
+
+.user-profile-form input:hover {
+  background-color: rgba(38, 38, 38, 0.125);
+  border: 2px solid rgba(0, 0, 0, 0.5);  
+}
+
+.user-profile-form label {
+  color: black;
+  font-weight: bold;
+}
+
+.user-profile-message {
+  color: black;
+  margin-bottom: 0;  
+}
+
+.user-profile-div {
+  width: 45vw;
+  min-width: 23em;  
+  max-width: 32em;
+  margin-top: -2.5em;
+}
+
+.username-display {
+  color: black;
+  font-weight: bold;  
+}
+
+.username-value {
+  color: black;
+  padding-left: 0.3em; 
+}
+
+.user-profile-button {
+  min-width: 20em;
+  width: 40.5vw;
+  max-width: 29em;    
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  margin-top: 1.2em;
+}
+
+.bad-update-div {
+  background-color: rgba(226, 31, 31, 0.3);
+  min-height: 2.5em;
+  border-radius: 0.7em;
+  margin-bottom: 0.5em;
+}
+    
+.bad-update-message {
+  color: rgb(128, 55, 55);
+  text-align: center;
+  padding: 0.5em;
+}
+
+.success-update-div {
+  background-color: rgba(23, 204, 35, 0.4);
+  min-height: 2.5em;
+  border-radius: 0.7em;
+  margin-bottom: 0.5em;
+}
+    
+.success-update-message {
+  color: rgb(31, 82, 27);
+  text-align: center;
+  padding: 0.5em;
+}
