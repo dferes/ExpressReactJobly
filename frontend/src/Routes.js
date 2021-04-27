@@ -9,71 +9,33 @@ import Login from './Login';
 import CompanyDetails from './CompanyDetails';
 
 
-const Routes = ({ 
-  companies, 
-  jobs, 
-  handleFormChange, 
-  handleFormSubmit, 
-  isLoggedIn,
-  user, 
-  loginFormData, 
-  signupFormData,
-  userFormData,
-  errorMessage,
-  showSuccessMessage,
-  setShowSuccessMessage,
-  setJobAppyId
-}) => {
+const Routes = ({ companies, jobs, errorMessage, showSuccessMessage, setShowSuccessMessage }) => {
   return (
     <Switch>
       <Route exact path='/'>
-        <Home isLoggedIn={isLoggedIn} user={user} />
+        <Home />
       </Route>
       <Route exact path='/companies'>
-        <CompanyList companies={companies} isLoggedIn={isLoggedIn}/>
+        <CompanyList companies={companies} />
       </Route>
       <Route exact path='/companies/:handle'>
-        <CompanyDetails 
-          isLoggedIn={isLoggedIn}
-          setJobAppyId={setJobAppyId}
-          user={user}  
-        />
+        <CompanyDetails />
       </Route>
       <Route exact path='/jobs'>
-        <JobList jobs={jobs} 
-          isLoggedIn={isLoggedIn} 
-          setJobAppyId={setJobAppyId}
-          user={user}  
-        />
+        <JobList jobs={jobs} />
       </Route>
       <Route exact path='/profile'>
         <Profile 
-          user={user}
-          handleFormChange={handleFormChange}
-          handleFormSubmit={handleFormSubmit}
-          userFormData={userFormData}
           errorMessage={errorMessage}
           showSuccessMessage={showSuccessMessage}
           setShowSuccessMessage={setShowSuccessMessage} 
         />
       </Route>
       <Route exact path='/signup'>
-        <Signup 
-          signupFormData={signupFormData}
-          handleFormChange={handleFormChange}
-          handleFormSubmit={handleFormSubmit}
-          errorMessage={errorMessage}
-          isLoggedIn={isLoggedIn}
-        />
+        <Signup errorMessage={errorMessage} />
       </Route>
       <Route exact path='/login'>
-        <Login 
-          handleFormChange={handleFormChange}
-          handleFormSubmit={handleFormSubmit}
-          loginFormData={loginFormData}
-          errorMessage={errorMessage}
-          isLoggedIn={isLoggedIn}
-        />
+        <Login errorMessage={errorMessage} />
       </Route>
       <Redirect to='/' />
     </Switch>
