@@ -8,7 +8,7 @@ const Company = ({ handle, name, description, logoUrl }) => {
     <Link className='company-link' to={`/companies/${handle}`}>
       <div className='company-div'> 
         <p className='company-name'>{name}</p>
-        <img className='company-image' src={comp.logoUrl} alt=''/>
+        <img className='company-image' src={logoUrl} alt=''/>
         <p className='company-description'>{description}</p> 
       </div>  
     </Link>  
