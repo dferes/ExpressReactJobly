@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from './FormContext';
 import { NavLink } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from 'reactstrap';
 import './NavBar.css';
 
-const NavBar = ({ isLoggedIn, setIsLoggedIn, user }) => {
+const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
+  const { user } = useContext(UserContext);
   return (
     <div>
       <Navbar expand='md'>
