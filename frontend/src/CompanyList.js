@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import FormContext from './FormContext';
 import './CompanyList.css';
 import { Button } from 'reactstrap';
 import Company from './Company';
 import { useHistory } from 'react-router-dom';
 import useInputFilter from './hooks/useInputFilter';
 
-const CompanyList = ({ companies, isLoggedIn }) => {
+const CompanyList = ({ companies }) => {
+  const { user } = useContext(FormContext);
   const history = useHistory();
-  if(!isLoggedIn) history.push('/');
+  if(!user.username) history.push('/');
   
   const [ 
     resultList, 
