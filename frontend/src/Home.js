@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Home.css';
 import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import FormContext from './FormContext';
 
-const Home = ({ isLoggedIn, user }) => {
+const Home = () => {
+  const { user } = useContext(FormContext);
   return (
     <section>
       <div className='jobly-welcome-div'>
         <h1 className='jobly-welcome-title'>Jobly</h1>
         <h3 className='jobly-welcome-message'>All the jobs in one, convenient place.</h3>
-        { !isLoggedIn &&
+        { !user.username &&
           <div>
             <Link exact to='/login'>
               <Button color='primary' className='homepage-login-button'>Login</Button>
@@ -20,7 +22,7 @@ const Home = ({ isLoggedIn, user }) => {
           </div>
         }    
         {
-          isLoggedIn && <h2 className='jobly-hello-message'>Welcome Back, {user.firstName}!</h2>  
+          user.username && <h2 className='jobly-hello-message'>Welcome Back, {user.firstName}!</h2>  
         }  
       </div>  
     </section>
