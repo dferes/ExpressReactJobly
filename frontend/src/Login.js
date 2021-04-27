@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Button, FormGroup, Label, Input } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
+import FormContext from './FormContext';
 import './Login.css';
 
 
-const Login = ({ handleFormSubmit, handleFormChange, loginFormData, isLoggedIn, errorMessage  }) => {
+const Login = ({ errorMessage  }) => {
   const history = useHistory();
-  if(!errorMessage.logIn && isLoggedIn)  history.push('/');
+  const {user, handleFormSubmit, handleFormChange, loginFormData} = useContext(FormContext);
+  if(!errorMessage.logIn && user.username)  history.push('/');
 
   const handleLoginChange = evt => handleFormChange(evt, true, false);
   const handleLoginSubmit = evt => handleFormSubmit(evt, 'logIn', loginFormData);

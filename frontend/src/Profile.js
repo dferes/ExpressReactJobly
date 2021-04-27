@@ -1,18 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import FormContext from './FormContext';
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
 import './Profile.css';
 
-const Profile = ({ errorMessage, user, userFormData, handleFormChange, handleFormSubmit, showSuccessMessage, setShowSuccessMessage }) => {
+const Profile = ({ errorMessage, showSuccessMessage, setShowSuccessMessage }) => {
   const history = useHistory();
+  const { user, userFormData, handleFormChange, handleFormSubmit } = useContext(FormContext);
   if(!user.username) history.push('/');
 
   const [ successfulUpdate, setSuccessfulUpdate ] = useState(showSuccessMessage);
+  
   const handleUpdateChange = evt => handleFormChange(evt, false, false);
   const handleUpdateSubmit = evt => {
     handleFormSubmit(evt, 'update', {...userFormData, username: user.username});
   };
-
+  
 
   useEffect( () => {
     setSuccessfulUpdate(showSuccessMessage);

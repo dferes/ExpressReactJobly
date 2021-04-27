@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import FormContext from './FormContext';
 import { useHistory } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import './Signup.css';
 
 
-const Signup = ({ signupFormData, handleFormChange, handleFormSubmit, errorMessage, isLoggedIn }) => {
+const Signup = ({ errorMessage }) => {
   const history = useHistory();
-  if ( !errorMessage.signup && isLoggedIn ) history.push('/');
- 
+  const {user, signupFormData, handleFormChange, handleFormSubmit} = useContext(FormContext);
+  if ( !errorMessage.signup && user.username ) history.push('/');
+
   const handleSignupChange = evt => handleFormChange(evt, false, true);
   const handleSignupSubmit = evt => handleFormSubmit(evt, 'signup', signupFormData);
+
 
   return (
     <div className='signup-form-div'>
