@@ -5,25 +5,24 @@ import NavBar from './NavBar';
 import Routes from './Routes';
 import useLocalStorage from './hooks/useLocalStorage';
 import JoblyApi from './api';
+import FormContext from './FormContext';
 
-// TODO: Use 'useContext' to pass all major props
 
 function App() {
-  const emptyUserData = {username: '', firstName: '', lastName: '', email: '', isAdmin: '', applications: []}; // Necessary
-  const [ companies, setCompanies ] = useState([]); // useLocalStorage ??
-  const [ jobs, setJobs ] = useState([]);  // useLocalStorage ??
-
-  const [ loginFormData, setLoginFormData ] = useState({ username: '', password: ''}); // Necessary?? // possible to use one piece of state for all form data??
-  const [ signupFormData, setSignupFormData ] = useState( emptyUserData ); // Necessary  // possible to use one piece of state for all form data??
-  const [ userFormData, setUserFormData ] = useState({}); // possible to use one piece of state for all form data??  
+  const [ companies, setCompanies ] = useState([]);
+  const [ jobs, setJobs ] = useState([]);
+  const [ loginFormData, setLoginFormData ] = useState({});
+  const [ signupFormData, setSignupFormData ] = useState( {} ); 
+  const [ userFormData, setUserFormData ] = useState({});
   const [ errorMessage, setErrorMessage ] = useState({});
   const [ showSuccessMessage, setShowSuccessMessage ] = useState(false);
-  const [ jobApplyId, setJobAppyId] = useState(''); 
+  const [ jobApplyId, setJobApplyId] = useState(''); 
 
   const [ userToken, setUserToken ] = useLocalStorage('userToken', '');
-  const [ user, setUser ] = useLocalStorage('user',  emptyUserData );
+  const [ user, setUser ] = useLocalStorage('user',  {} );
   const [ isLoggedIn, setIsLoggedIn ] = useLocalStorage('isLoggedIn', false);
   
+
  /** Retrieves a list of all companies and all jobs on first render */
   useEffect( () => {
     const getCompanies = async () => {
@@ -45,6 +44,7 @@ function App() {
     const logout = () => {
       setUserToken('');
       setUser({});
+      resetFormData();
     };
 
     if (!isLoggedIn) logout();
@@ -67,7 +67,7 @@ function App() {
   const handleFormSubmit = async (evt, apiMethod, formInfo) => {
     evt.preventDefault();
     try {
-      if(['logIn', 'submit'].includes(apiMethod)){
+      if(['logIn', 'signup'].includes(apiMethod)){
         const token = await JoblyApi[ [apiMethod] ](formInfo);
         setUserToken(token);
       }else {
@@ -83,12 +83,14 @@ function App() {
     }catch(err) { setErrorMessage({ [apiMethod]: err }); }
   };
 
-  
+  /** Makes a post request to the Jobly api to add a job id 
+   *  to the logged in user's list of jobs applied to 
+   *  (user.jobs) */
   useEffect( () => {
     const apply = async () => {
       JoblyApi.setToken(userToken);
       await JoblyApi.applyToJob( user.username, jobApplyId );  
-      setJobAppyId('');
+      setJobApplyId('');
 
       const user_ = await JoblyApi.getUser(user.username);
       setUser(user_);
@@ -97,33 +99,37 @@ function App() {
     if(jobApplyId!=='') apply();
   }, [jobApplyId, user.username, userToken, setUser ]); 
 
+  
+  const formFunctions = {
+    user: user,
+    handleFormChange: handleFormChange,
+    handleFormSubmit: handleFormSubmit,
+    loginFormData: loginFormData,
+    signupFormData: signupFormData,
+    userFormData: userFormData,
+    setJobApplyId: setJobApplyId  
+  };
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <NavBar 
-          isLoggedIn={isLoggedIn} 
-          setIsLoggedIn={setIsLoggedIn}
-          user={user} 
-        />
-        <main>
-          <Routes 
-            companies={companies} 
-            jobs={jobs} 
-            handleFormChange={handleFormChange}
-            handleFormSubmit={handleFormSubmit}
-            userToken={userToken}
-            isLoggedIn={isLoggedIn}
-            user={user}
-            loginFormData={loginFormData}
-            signupFormData={signupFormData}
-            userFormData={userFormData}
-            errorMessage={errorMessage}
-            showSuccessMessage={showSuccessMessage}
-            setShowSuccessMessage={setShowSuccessMessage}
-            setJobAppyId={setJobAppyId}
+      <FormContext.Provider value={formFunctions}>
+        <BrowserRouter>
+          <NavBar 
+            isLoggedIn={isLoggedIn} 
+            setIsLoggedIn={setIsLoggedIn}
           />
-        </main>
-      </BrowserRouter>
+          <main>
+            <Routes 
+              companies={companies} 
+              jobs={jobs} 
+              userToken={userToken}
+              errorMessage={errorMessage}
+              showSuccessMessage={showSuccessMessage}
+              setShowSuccessMessage={setShowSuccessMessage}
+            />
+          </main>
+        </BrowserRouter>
+      </FormContext.Provider>
     </div>
   );
 };
