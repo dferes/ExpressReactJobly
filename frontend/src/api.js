@@ -79,14 +79,14 @@ class JoblyApi {
     return res.token;
   }
 
-  /** Accepts { username, firstname, lastName, email, password }
+  /** Accepts the user information:
+   *    { username, firstname, lastName, email, password }
    *  and can update { firstName, lastName, email } in the database
    *  and will return { firstName, lastName, email }. Only username
    *  and password are required.
    */ 
   static async update(formData) { // rename this to updateUser
     const { username, password } = formData;
- 
     await this.request( // Verify the password is correct before updating user
       'auth/token', 
       { username: username, password: password },
