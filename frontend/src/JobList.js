@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import FormContext from './FormContext';
 import Job from './Job';
 import useInputFilter from './hooks/useInputFilter';
 import { Button } from 'reactstrap';
 import './JobList.css';
 
 
-const JobList = ({ jobs, isLoggedIn, setJobAppyId, user }) => {
+const JobList = ({ jobs }) => {
+  const { user } = useContext(FormContext);
   const history = useHistory();
-  if(!isLoggedIn) history.push('/');
+  if(!user.username) history.push('/');
 
   const [ 
     resultList, 
@@ -17,6 +19,7 @@ const JobList = ({ jobs, isLoggedIn, setJobAppyId, user }) => {
     handleSubmit, 
     isEmpty 
   ] = useInputFilter({ defaultList: jobs, apiMethod: 'getAllJobs', termKey: 'title'} );
+
 
   return (
     <div>
@@ -36,14 +39,12 @@ const JobList = ({ jobs, isLoggedIn, setJobAppyId, user }) => {
       </div>    
       { !isEmpty && resultList.map( job => (
         <Job 
-          user={user}
           key={job.id}
           id={job.id}
           title={job.title}
           companyHandle={job.companyHandle}
           salary={job.salary}
           equity={job.equity}
-          setJobAppyId={setJobAppyId}
         />
       ))}
       { isEmpty && <p className='no-results-msg'>Sorry, no results were found!</p> }  
