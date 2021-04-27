@@ -10,7 +10,7 @@ const Job = ({ id, title, companyHandle, salary, equity }) => {
     <div className='job-div' key={id}> 
       <p className='job-title'>{title}</p>
       <p className='job-company-handle'>{companyHandle}</p>
-      {/* <img className='company-image' src={comp.logoUrl} alt=''/> */}
+      <img className='company-image' src={comp.logoUrl} alt=''/>
       <p className='job-salary'>Salary: ${salary}</p>
       <p className='job-equity'>Equity: {equity? equity: 0}</p>
       {
