@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import FormContext from './FormContext';
 import Job from './Job';
 import { useParams, useHistory } from 'react-router-dom';
 import JoblyApi from './api';
 import './CompanyDetails.css';
 
-const CompanyDetails = ({ isLoggedIn, user, setJobAppyId }) => {
+const CompanyDetails = () => {
+  const { user } = useContext(FormContext);
   const history = useHistory();
-  if(!isLoggedIn) history.push('/');
+  if(!user.username) history.push('/');
 
   const [ company, setCompany ] = useState({});
   const [ readyToRender, setReadyToRender ] = useState(false);
@@ -37,15 +39,12 @@ const CompanyDetails = ({ isLoggedIn, user, setJobAppyId }) => {
       }  
       { readyToRender && company.jobs.map( job => (
         <Job 
-          user={user}
           key={job.id}
           id={job.id}
           title={job.title}
           companyHandle={company.handle}
           salary={job.salary}
           equity={job.equity}
-          isLoggedIn={isLoggedIn}
-          setJobAppyId={setJobAppyId}
         />  
       ))}
       {  noCompanyFound && 
