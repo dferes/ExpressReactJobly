@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from 'reactstrap';
+import FormContext from './FormContext';
 import './Job.css';
 
 
-const Job = ({ user, id, title, companyHandle, salary, equity, setJobAppyId }) => {
+const Job = ({ id, title, companyHandle, salary, equity }) => {
+  const {user, setJobApplyId } = useContext(FormContext);
   return (
     <div className='job-div' key={id}> 
       <p className='job-title'>{title}</p>
@@ -13,7 +15,7 @@ const Job = ({ user, id, title, companyHandle, salary, equity, setJobAppyId }) =
       <p className='job-equity'>Equity: {equity? equity: 0}</p>
       {
         !user.applications.includes(id) &&
-        <Button onClick={ () => setJobAppyId(id)} className='job-apply-button' >
+        <Button onClick={ () => setJobApplyId(id)} className='job-apply-button' >
           Apply
         </Button>
       }
