@@ -10,7 +10,7 @@ Deployed with surge: https://dylan-feres-jobly.surge.sh/
 
 <img src='https://raw.githubusercontent.com/dferes/Jobly/main/public/Jobly_2.png'><br>
 
-<img src='https://raw.githubusercontent.com/dferes/Jobly/main/public/Jobly_3.png'><br>
+<img src='https://raw.githubusercontent.com/dferes/Jobly/main/public/jobly_3.png'><br>
 
 ## Installation and Setup Instructions
 
