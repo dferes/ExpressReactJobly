@@ -18,7 +18,7 @@ Clone this repository. You will need `node` and `npm` installed globally on your
 
 Clone this repository: 
 
-`https://github.com/dferes/Jobly.git`
+`https://github.com/dferes/Jobly_v2.git`
 
 Installation:
 
