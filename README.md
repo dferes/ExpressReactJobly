@@ -14,7 +14,7 @@ Deployed with surge: https://dylan-feres-jobly.surge.sh/
 
 ## Installation and Setup Instructions
 
-Clone this repository. You will need `node` and `npm` installed globally on your machine. In order to interact with a local copy of the backend api, you will first need to clone and install the api: https://github.com/dferes/JoblyAPI 
+Clone this repository. You will need `node` and `npm` installed globally on your machine. In order to interact with a local copy of the backend api, you will first need to clone and install the api: https://github.com/dferes/JoblyAPI_v2 
 
 Clone this repository: 
 
